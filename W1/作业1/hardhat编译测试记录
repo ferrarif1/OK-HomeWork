@@ -1,0 +1,313 @@
+Last login: Tue Feb 22 21:04:32 on ttys000
+zhangyuanyi@MacBook-Pro ~ % node
+Welcome to Node.js v17.3.0.
+Type ".help" for more information.
+> .help
+.break    Sometimes you get stuck, this gets you out
+.clear    Alias for .break
+.editor   Enter editor mode
+.exit     Exit the REPL
+.help     Print this help message
+.load     Load JS from a file into the REPL session
+.save     Save all evaluated commands in this REPL session to a file
+
+Press Ctrl+C to abort current expression, Ctrl+D to exit the REPL
+> .exit
+zhangyuanyi@MacBook-Pro ~ % cd /Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code  
+zhangyuanyi@MacBook-Pro Code % npm init --yes 
+Wrote to /Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/package.json:
+
+{
+  "name": "code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+
+
+zhangyuanyi@MacBook-Pro Code % npm install --save-dev hardhat
+npm WARN deprecated debug@3.2.6: Debug versions >=3.2.0 <3.2.7 || >=4 <4.3.1 have a low-severity ReDos regression when used in a Node.js environment. It is recommended you upgrade to 3.2.7 or 4.3.1. (https://github.com/visionmedia/debug/issues/797)
+npm WARN deprecated fsevents@2.1.3: "Please update to latest v2.3 or v2.2"
+
+added 338 packages in 28s
+npm notice 
+npm notice New minor version of npm available! 8.3.0 -> 8.5.1
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v8.5.1
+npm notice Run npm install -g npm@8.5.1 to update!
+npm notice 
+zhangyuanyi@MacBook-Pro Code % npm install -g npm@8.5.1 
+npm ERR! code EACCES
+npm ERR! syscall rename
+npm ERR! path /usr/local/lib/node_modules/npm
+npm ERR! dest /usr/local/lib/node_modules/.npm-i9nnxROI
+npm ERR! errno -13
+npm ERR! Error: EACCES: permission denied, rename '/usr/local/lib/node_modules/npm' -> '/usr/local/lib/node_modules/.npm-i9nnxROI'
+npm ERR!  [Error: EACCES: permission denied, rename '/usr/local/lib/node_modules/npm' -> '/usr/local/lib/node_modules/.npm-i9nnxROI'] {
+npm ERR!   errno: -13,
+npm ERR!   code: 'EACCES',
+npm ERR!   syscall: 'rename',
+npm ERR!   path: '/usr/local/lib/node_modules/npm',
+npm ERR!   dest: '/usr/local/lib/node_modules/.npm-i9nnxROI'
+npm ERR! }
+npm ERR! 
+npm ERR! The operation was rejected by your operating system.
+npm ERR! It is likely you do not have the permissions to access this file as the current user
+npm ERR! 
+npm ERR! If you believe this might be a permissions issue, please double-check the
+npm ERR! permissions of the file and its containing directories, or try running
+npm ERR! the command again as root/Administrator.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /Users/zhangyuanyi/.npm/_logs/2022-02-23T01_02_58_850Z-debug-0.log
+zhangyuanyi@MacBook-Pro Code % sudo npm install -g npm@8.5.1 
+Password:
+
+removed 1 package, and changed 49 packages in 4s
+
+11 packages are looking for funding
+  run `npm fund` for details
+zhangyuanyi@MacBook-Pro Code % npm install --save-dev hardhat
+
+up to date in 1s
+zhangyuanyi@MacBook-Pro Code % npx hardhat
+888    888                      888 888               888
+888    888                      888 888               888
+888    888                      888 888               888
+8888888888  8888b.  888d888 .d88888 88888b.   8888b.  888888
+888    888     "88b 888P"  d88" 888 888 "88b     "88b 888
+888    888 .d888888 888    888  888 888  888 .d888888 888
+888    888 888  888 888    Y88b 888 888  888 888  888 Y88b.
+888    888 "Y888888 888     "Y88888 888  888 "Y888888  "Y888
+
+👷 Welcome to Hardhat v2.8.4 👷‍
+
+✔ What do you want to do? · Create an empty hardhat.config.js
+✨ Config file created ✨
+zhangyuanyi@MacBook-Pro Code % npm install --save-dev @nomiclabs/hardhat-ethers ethers @nomiclabs/hardhat-waffle ethereum-waffle chai
+npm WARN deprecated ganache-core@2.13.2: ganache-core is now ganache; visit https://trfl.io/g7 for details
+npm WARN deprecated ganache-core@2.13.2: ganache-core is now ganache; visit https://trfl.io/g7 for details
+npm WARN deprecated uuid@3.4.0: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+npm WARN deprecated querystring@0.2.0: The querystring API is considered Legacy. new code should use the URLSearchParams API instead.
+npm WARN deprecated har-validator@5.1.5: this library is no longer supported
+npm WARN deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
+npm WARN deprecated testrpc@0.0.1: testrpc has been renamed to ganache-cli, please use this package from now on.
+npm WARN deprecated @ensdomains/ens@0.4.5: Please use @ensdomains/ens-contracts
+npm WARN deprecated @ensdomains/resolver@0.2.4: Please use @ensdomains/ens-contracts
+
+added 1098 packages in 57s
+
+42 packages are looking for funding
+  run `npm fund` for details
+zhangyuanyi@MacBook-Pro Code % npx hardhat compile
+✔ Help us improve Hardhat with anonymous crash reports & basic usage data? (Y/n) · false
+
+Downloading compiler 0.7.3
+Compiling 1 file with 0.7.3
+contracts/Token.sol: Warning: SPDX license identifier not provided in source file. Before publishing, consider adding a comment containing "SPDX-License-Identifier: <SPDX-License>" to each source file. Use "SPDX-License-Identifier: UNLICENSED" for non-open-source code. Please see https://spdx.org for more information.
+
+contracts/Token.sol:26:5: Warning: Visibility for constructor is ignored. If you want the contract to be non-deployable, making it "abstract" is sufficient.
+    constructor() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+Solidity compilation finished successfully
+zhangyuanyi@MacBook-Pro Code % npx hardhat test
+Compiling 1 file with 0.7.3
+contracts/Token.sol:27:5: Warning: Visibility for constructor is ignored. If you want the contract to be non-deployable, making it "abstract" is sufficient.
+    constructor() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+Solidity compilation finished successfully
+
+
+  Token contract
+    1) Deployment should assign the total supply of tokens to the owner
+
+
+  0 passing (451ms)
+  1 failing
+
+  1) Token contract
+       Deployment should assign the total supply of tokens to the owner:
+     Error: error:0308010C:digital envelope routines::unsupported
+      at new Hash (node:internal/crypto/hash:67:19)
+      at Object.createHash (node:crypto:130:10)
+      at hash160 (node_modules/ethereum-cryptography/vendor/hdkey-without-crypto.js:249:21)
+      at HDKey.set (node_modules/ethereum-cryptography/vendor/hdkey-without-crypto.js:50:24)
+      at Function.HDKey.fromMasterSeed (node_modules/ethereum-cryptography/vendor/hdkey-without-crypto.js:194:20)
+      at deriveKeyFromMnemonicAndPath (node_modules/hardhat/src/internal/util/keys-derivation.ts:21:27)
+      at derivePrivateKeys (node_modules/hardhat/src/internal/core/providers/util.ts:29:52)
+      at normalizeHardhatNetworkAccountsConfig (node_modules/hardhat/src/internal/core/providers/util.ts:56:10)
+      at createProvider (node_modules/hardhat/src/internal/core/providers/construction.ts:78:59)
+      at /Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/hardhat/src/internal/core/runtime-environment.ts:80:28
+
+
+/***************
+
+出现这个错误是因为 node.js V17版本中最近发布的OpenSSL3.0, 而OpenSSL3.0对允许算法和密钥大小增加了严格的限制，可能会对生态系统造成一些影响.
+解决：
+降低node.js版本
+
+安装和切换node版本
+
+查看node版本
+
+    ​$ ​node -v
+
+列出所有node版本
+
+    $ n ls
+
+安装某个版本
+
+    $ n xx.xx.x (xx.xx.x 为要安装的版本号)
+
+安装最新版本
+
+    $ n lastest
+
+安装最新稳定版
+
+    $ n stable
+
+切换node版本(输入命令后上下键盘选择确认)
+
+    $ n
+
+删除某个版本
+
+    $ n rm xx.xx.x
+
+使用某个版本来运行脚本
+
+    $ n use xx.xx.x a.js
+
+***************/
+An unexpected error occurred:
+
+Error: error:0308010C:digital envelope routines::unsupported
+    at new Hash (node:internal/crypto/hash:67:19)
+    at Object.createHash (node:crypto:130:10)
+    at hash160 (/Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/ethereum-cryptography/vendor/hdkey-without-crypto.js:249:21)
+    at HDKey.set (/Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/ethereum-cryptography/vendor/hdkey-without-crypto.js:50:24)
+    at Function.HDKey.fromMasterSeed (/Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/ethereum-cryptography/vendor/hdkey-without-crypto.js:194:20)
+    at deriveKeyFromMnemonicAndPath (/Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/hardhat/src/internal/util/keys-derivation.ts:21:27)
+    at derivePrivateKeys (/Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/hardhat/src/internal/core/providers/util.ts:29:52)
+    at normalizeHardhatNetworkAccountsConfig (/Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/hardhat/src/internal/core/providers/util.ts:56:10)
+    at createProvider (/Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/hardhat/src/internal/core/providers/construction.ts:78:59)
+    at /Users/zhangyuanyi/Downloads/OK-HomeWork/W1/Code/node_modules/hardhat/src/internal/core/runtime-environment.ts:80:28 {
+  opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
+  library: 'digital envelope routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_EVP_UNSUPPORTED'
+}
+zhangyuanyi@MacBook-Pro Code % node -v
+v17.3.0
+zhangyuanyi@MacBook-Pro Code % n ls
+node/17.3.0
+zhangyuanyi@MacBook-Pro Code % n 16.13.0
+  installing : node-v16.13.0
+       mkdir : /usr/local/n/versions/node/16.13.0
+mkdir: /usr/local/n/versions/node/16.13.0: Permission denied
+
+  Error: sudo required (or change ownership, or define N_PREFIX)
+/***************
+
+镜像问题，翻墙设置改为全局即可
+
+****************/
+zhangyuanyi@MacBook-Pro Code % sudo n 16.13.0
+Password:
+  installing : node-v16.13.0
+curl: (35) LibreSSL SSL_connect: SSL_ERROR_SYSCALL in connection to nodejs.org:443 
+
+  Error: download preflight failed for '16.13.0' (https://nodejs.org/dist/v16.13.0/node-v16.13.0-darwin-x64.tar.xz)
+
+
+zhangyuanyi@MacBook-Pro Code % sudo n 16.13.0
+  installing : node-v16.13.0
+       mkdir : /usr/local/n/versions/node/16.13.0
+       fetch : https://nodejs.org/dist/v16.13.0/node-v16.13.0-darwin-x64.tar.xz
+   installed : v16.13.0 (with npm 8.1.0)
+
+zhangyuanyi@MacBook-Pro Code % sudo n
+  installed : v16.13.0 (with npm 8.1.0)
+
+zhangyuanyi@MacBook-Pro Code % node -v
+v16.13.0
+/*******************
+
+修改node.js版本后 测试通过
+
+*********************/
+zhangyuanyi@MacBook-Pro Code %  npx hardhat test
+
+
+  Token contract
+    ✓ Deployment should assign the total supply of tokens to the owner (670ms)
+
+
+  1 passing (673ms)
+/***********
+
+完全测试 + console.log
+
+***********/
+zhangyuanyi@MacBook-Pro Code % npx hardhat test
+Compiling 2 files with 0.7.3
+contracts/Token.sol:26:5: Warning: Visibility for constructor is ignored. If you want the contract to be non-deployable, making it "abstract" is sufficient.
+    constructor() public {
+    ^ (Relevant source part starts here and spans across multiple lines).
+
+Solidity compilation finished successfully
+
+
+  Token contract
+    Deployment
+      ✓ Should set the right owner
+      ✓ Should assign the total supply of tokens to the owner
+    Transactions
+Sender balance is 1000000 tokens
+Trying to send 50 tokens to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+Sender balance is 50 tokens
+Trying to send 50 tokens to 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc
+      ✓ Should transfer tokens between accounts (60ms)
+Sender balance is 0 tokens
+Trying to send 1 tokens to 0xf39fd6e51aad88f6f4ce6ab8827279cfffb92266
+      ✓ Should fail if sender doesn’t have enough tokens (45ms)
+Sender balance is 1000000 tokens
+Trying to send 100 tokens to 0x70997970c51812dc3a010c7d01b50e0d17dc79c8
+Sender balance is 999900 tokens
+Trying to send 50 tokens to 0x3c44cdddb6a900fa2b585dd299e03d12fa4293bc
+      ✓ Should update balances after transfers (58ms)
+
+
+  5 passing (1s)
+/********
+
+Deploy to ganache
+
+********/
+zhangyuanyi@MacBook-Pro Code % npx hardhat run scripts/deploy.js --network ganache
+Deploying contracts with the account: 0xd39500F013B9A86609f6C9ac206925f0566aD96d
+Account balance: 100000000000000000000
+Token address: 0xe398F959b813E992c4E0cC4E7Df438D66fA08b49
+
+
+/********
+
+Deploy to goerli
+Txid:
+0x27b022596cf3ff2a28816658e72691586de5c82dbbb008af4bda00c0c4c6dfb1
+
+********/
+zhangyuanyi@MacBook-Pro Code %  npx hardhat run scripts/deploy.js --network goerli
+Deploying contracts with the account: 0x892953Cb6cDC87c8aD7c4aAfb06A716CBa231D8a
+Account balance: 150897969028007531
+Token address: 0x18c5aCcd7D5AAcf519264bebc57e8E25f21FD54e
+
