@@ -19,6 +19,7 @@ contract Bank {
         address acc = msg.sender;
         require(balances[acc] > 0, "The user have no funds !");
         payable(acc).transfer(balances[acc]);
+        balances[acc] = 0;
     }
     
     function balanceOf(address account) external view returns (uint256) {
