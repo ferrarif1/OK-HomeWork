@@ -11,11 +11,20 @@ contract Bank {
     mapping(address => uint256) balances;
     address public owner;
  
+    bool public locked;
+ 
+    modifier noReentrancy(){
+      require(!locked, 'No reentrancy');
+      locked = true;
+      _;
+      locked = false;
+    }
+
     constructor() {
         owner = msg.sender;
     }
 
-    function withdraw() external{
+    function withdraw() external noReentrancy(){
         address acc = msg.sender;
         require(balances[acc] > 0, "The user have no funds !");
         payable(acc).transfer(balances[acc]);
@@ -31,6 +40,6 @@ contract Bank {
     }
   
     receive() external payable{
-      balances[msg.sender] += msg.value;
+       balances[msg.sender] += msg.value;
     }
 }
