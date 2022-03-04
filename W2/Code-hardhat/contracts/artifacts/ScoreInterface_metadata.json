@@ -6,13 +6,22 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "stu",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "score",
+						"type": "uint256"
+					}
+				],
+				"name": "modifyScoreOfStudent",
+				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "constructor"
-			},
-			{
-				"stateMutability": "payable",
-				"type": "fallback"
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -22,7 +31,7 @@
 						"type": "address"
 					}
 				],
-				"name": "balanceOf",
+				"name": "scoreOf",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -32,43 +41,6 @@
 				],
 				"stateMutability": "view",
 				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "locked",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
-					{
-						"internalType": "address",
-						"name": "",
-						"type": "address"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "withdraw",
-				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"stateMutability": "payable",
-				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -84,7 +56,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Code-hardhat/contracts/Bank.sol": "Bank"
+			"Code-hardhat/contracts/Teacher.sol": "ScoreInterface"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -98,12 +70,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"Code-hardhat/contracts/Bank.sol": {
-			"keccak256": "0x40e6502c10422e1b2c4478e5ef6527dcf4f50d06ee7f4a3a3ced05e992ed23f6",
+		"Code-hardhat/contracts/Teacher.sol": {
+			"keccak256": "0x4003daecdcecce26cd6a71adf7c5acfe541cd754a09351f70ba970900766e2ca",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://85c77ddf53f26da720e0bed6ef652dc3f0b2f9c10d87ed29b97fbf3e397404a4",
-				"dweb:/ipfs/QmZRzVresj4tJPYCQZt9k2Dd5obLUw2gpD5MCRavQi2coP"
+				"bzz-raw://2df211af3be60bc0c81d36029abbba0818e7daf0ad093b0f00ad0e6a377635e8",
+				"dweb:/ipfs/QmQ8rM9LiYwk4b9c92Bua3akJQHVbFbEUmEJrjT3xeZy6M"
 			]
 		},
 		"hardhat/console.sol": {

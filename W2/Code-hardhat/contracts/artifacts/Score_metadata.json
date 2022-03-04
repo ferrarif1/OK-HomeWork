@@ -15,25 +15,6 @@
 				"type": "fallback"
 			},
 			{
-				"inputs": [
-					{
-						"internalType": "address",
-						"name": "account",
-						"type": "address"
-					}
-				],
-				"name": "balanceOf",
-				"outputs": [
-					{
-						"internalType": "uint256",
-						"name": "",
-						"type": "uint256"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
 				"inputs": [],
 				"name": "locked",
 				"outputs": [
@@ -47,8 +28,58 @@
 				"type": "function"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "stu",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "score",
+						"type": "uint256"
+					}
+				],
+				"name": "modifyScoreOfStudent",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "account",
+						"type": "address"
+					}
+				],
+				"name": "scoreOf",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "teacherAddr",
+						"type": "address"
+					}
+				],
+				"name": "setTeacher",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
-				"name": "owner",
+				"name": "teacher",
 				"outputs": [
 					{
 						"internalType": "address",
@@ -57,13 +88,6 @@
 					}
 				],
 				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "withdraw",
-				"outputs": [],
-				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
@@ -84,7 +108,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Code-hardhat/contracts/Bank.sol": "Bank"
+			"Code-hardhat/contracts/Score.sol": "Score"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -98,12 +122,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"Code-hardhat/contracts/Bank.sol": {
-			"keccak256": "0x40e6502c10422e1b2c4478e5ef6527dcf4f50d06ee7f4a3a3ced05e992ed23f6",
+		"Code-hardhat/contracts/Score.sol": {
+			"keccak256": "0xe651d50f6197bcdf96f1878f3a76c8f55c5e091d4d89473740e53b0c8894d0a8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://85c77ddf53f26da720e0bed6ef652dc3f0b2f9c10d87ed29b97fbf3e397404a4",
-				"dweb:/ipfs/QmZRzVresj4tJPYCQZt9k2Dd5obLUw2gpD5MCRavQi2coP"
+				"bzz-raw://1631ff5a3500630465609d74bfbf6d2b2bc4c697bf3093c4db9e015d1ae1b5af",
+				"dweb:/ipfs/QmcUF9vH58Pe6nUMKFDjLKywxaETPbHko9untu65D9mBGB"
 			]
 		},
 		"hardhat/console.sol": {

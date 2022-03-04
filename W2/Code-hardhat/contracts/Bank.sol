@@ -24,7 +24,7 @@ contract Bank {
         owner = msg.sender;
     }
 
-    function withdraw() external noReentrancy(){
+    function withdraw() external noReentrancy{
         address acc = msg.sender;
         require(balances[acc] > 0, "The user have no funds !");
         payable(acc).transfer(balances[acc]);

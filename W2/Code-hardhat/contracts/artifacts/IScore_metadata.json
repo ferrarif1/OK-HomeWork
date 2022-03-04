@@ -6,13 +6,22 @@
 	"output": {
 		"abi": [
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "stu",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "score",
+						"type": "uint256"
+					}
+				],
+				"name": "modifyScoreOfStudent",
+				"outputs": [],
 				"stateMutability": "nonpayable",
-				"type": "constructor"
-			},
-			{
-				"stateMutability": "payable",
-				"type": "fallback"
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -22,7 +31,7 @@
 						"type": "address"
 					}
 				],
-				"name": "balanceOf",
+				"name": "scoreOf",
 				"outputs": [
 					{
 						"internalType": "uint256",
@@ -34,41 +43,17 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
-				"name": "locked",
-				"outputs": [
-					{
-						"internalType": "bool",
-						"name": "",
-						"type": "bool"
-					}
-				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "owner",
-				"outputs": [
+				"inputs": [
 					{
 						"internalType": "address",
-						"name": "",
+						"name": "teacherAddr",
 						"type": "address"
 					}
 				],
-				"stateMutability": "view",
-				"type": "function"
-			},
-			{
-				"inputs": [],
-				"name": "withdraw",
+				"name": "setTeacher",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
-			},
-			{
-				"stateMutability": "payable",
-				"type": "receive"
 			}
 		],
 		"devdoc": {
@@ -84,7 +69,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Code-hardhat/contracts/Bank.sol": "Bank"
+			"Code-hardhat/contracts/Teacher.sol": "IScore"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -98,12 +83,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"Code-hardhat/contracts/Bank.sol": {
-			"keccak256": "0x40e6502c10422e1b2c4478e5ef6527dcf4f50d06ee7f4a3a3ced05e992ed23f6",
+		"Code-hardhat/contracts/Teacher.sol": {
+			"keccak256": "0x5e02c3cb999a65d270d099e77c3b8dba204d68d474c64337e86feee941aadf05",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://85c77ddf53f26da720e0bed6ef652dc3f0b2f9c10d87ed29b97fbf3e397404a4",
-				"dweb:/ipfs/QmZRzVresj4tJPYCQZt9k2Dd5obLUw2gpD5MCRavQi2coP"
+				"bzz-raw://65a28cff1653b87908a4af382dfa19e47c25c1ee91a09e3b3f4105f8f2e801ba",
+				"dweb:/ipfs/QmP3e2drWW2fKcTvR9rQG6tzjNZn1gpe9zNbpYS9Avb4gQ"
 			]
 		},
 		"hardhat/console.sol": {
