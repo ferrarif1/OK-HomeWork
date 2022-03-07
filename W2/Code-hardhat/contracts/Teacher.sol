@@ -28,7 +28,7 @@ contract Teacher {
       _;
     }
 
-    function modifyScore(address stuAddr, uint256 score) public {
+    function modifyScore(address stuAddr, uint256 score) public onlyOwner{
         scoreContract.modifyScoreOfStudent(stuAddr, score);
     }
     
