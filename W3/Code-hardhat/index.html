@@ -9,7 +9,7 @@
   <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
   <script language="javascript" type="text/javascript" src="./scripts/web3.min.js"></script>
   <script language="javascript" type="text/javascript" src="./scripts/MDG_ABI.js"></script>
-  <script language="javascript" type="text/javascript" src="./scripts/Valut_ABI.js"></script>
+  <script language="javascript" type="text/javascript" src="./scripts/Vault_ABI.js"></script>
 
 </head>
 
@@ -24,20 +24,20 @@
 
   <script>
 
-  /*
-  deploy txid:0x09a0b1190c1502ca66439153a287e46798825003945fb00cdec4356eb37c77c6
-  */
+  
     var MDGContract;
-    var MDGAddress = "0x24DDacC4C894663DC336Ca7dC9a1237791bD0C5e";
+    var MDGAddress = "0x90E4F5a6928bFD0809370FdFA951BA9430B4D9D1";
+    var VaultContract;
+    var VaultAddress = "0x8d9DDE550b75147d17b9A3D2D1e2db2f056DcdF6";
 
 
     var web3js = window.web3 ? new Web3(window.web3.currentProvider) : new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/de1e8657274a494aa59476341cafc010"));;
 
     function startApp() {
       console.log(" ******  start App   ******")
-      //合约通过已经在goerli网络部署的地址和相应的ABI文件实例化为变量 之后通过这个变量调用相应合约函数 实现与链上数据的交互
-      MDGContract = new web3js.eth.Contract(MDG_abi, MDGAddress);
-      OneRingNFTMarketPlaceAddress = new web3js.eth.Contract(oneRingNftMarketplaceABI, OneRingNFTMarketPlaceAddress);
+      
+      MDGContract = new web3js.eth.Contract(mdg_abi, MDGAddress);
+      VaultContract = new web3js.eth.Contract(vault_abi, VaultAddress);
 
       //test
       ownerOf(1).then(function (result, error) {
@@ -78,18 +78,13 @@
           }
         });
     }
-    /*
-    涉及交易的直接调用合约完成
-    查询的很少一部分调用合约，另外一部分后台数据库完成
-    以下全部列出
-    */
+
     /***********************************************************     MDG     **************************************************************************/
 
     ///交易
-    function mint(to, amount) {
-      $("#txStatus").text("Creating OneRingNFT on the blockchain. This may take a while...");
-      //value = 1000000000000000 = 0.001 ETH
-      return OneRingNFT.methods.safeMint(tokenUrl)
+    function approve(spender, amount) {
+      $("#txStatus").text("Approving... This may take a while...");
+      return MDGContract.methods.approve(spender, amount)
         .send({ from: web3.eth.accounts[0] })
         .on("receipt", function (receipt) {
           $("#txStatus").text(receipt);
@@ -99,8 +94,8 @@
         });
     }
 
-    function registerNewCollection(collectionName) {
-      return OneRingNFT.methods.registerNewCollection(collectionName)
+    function transferMDG(to, amount) {
+      return MDGContract.methods.transfer(to, amount)
         .send({ from: web3.eth.accounts[0] })
         .on("receipt", function (receipt) {
           $("#txStatus").text(receipt);
@@ -110,8 +105,8 @@
         });
     }
 
-    function addTokenIdToCollection(tokenId, collectionName) {
-      return OneRingNFT.methods.addTokenIdToCollection(tokenId, collectionName)
+    function mint(amount) {
+      return MDGContract.methods.mint(amount)
         .send({ from: web3.eth.accounts[0] })
         .on("receipt", function (receipt) {
           $("#txStatus").text(receipt);
@@ -121,21 +116,51 @@
         });
     }
 
-    ///查询      
-    //NFT 没有上架调用这个 上架后调用OneRingNFTMarketPlace的originalOwnerOfNFTId
-    //如果上架了，将返回合约地址
-    function ownerOf(id) {
-      return OneRingNFT.methods.ownerOf(id).call();
+    function mdgBalanceOf(addr) {
+      return MDGContract.methods.balanceOf(addr).call();
     }
 
-    function ownerOfCollectionName(collectionName) {
-      return OneRingNFT.methods.ownerOfCollectionName(collectionName).call();
+   /***********************************************************    Vault     **************************************************************************/
+   function approveMDGForVault(amount) {
+      $("#txStatus").text("Approving... This may take a while...");
+      return VaultContract.methods.approveMDG(amount)
+        .send({ from: web3.eth.accounts[0] })
+        .on("receipt", function (receipt) {
+          $("#txStatus").text(receipt);
+        })
+        .on("error", function (error) {
+          $("#txStatus").text(error);
+        });
     }
 
-    function tokenURI(id) {
-      return OneRingNFT.methods.tokenURI(id).call();
+    function depositMDGForVault(amount) {
+      $("#txStatus").text("Approving... This may take a while...");
+      return VaultContract.methods.deposit(amount)
+        .send({ from: web3.eth.accounts[0] })
+        .on("receipt", function (receipt) {
+          $("#txStatus").text(receipt);
+        })
+        .on("error", function (error) {
+          $("#txStatus").text(error);
+        });
     }
 
+    function withdrawMDGForVault() {
+      $("#txStatus").text("Approving... This may take a while...");
+      return VaultContract.methods.withdraw()
+        .send({ from: web3.eth.accounts[0] })
+        .on("receipt", function (receipt) {
+          $("#txStatus").text(receipt);
+        })
+        .on("error", function (error) {
+          $("#txStatus").text(error);
+        });
+    }
+    
+    function mdgBalanceOfAddrInVault(addr) {
+      return VaultContract.methods.balanceOf(addr).call();
+    }
+    
 
    
     /***********************************************************      UI     **************************************************************************/

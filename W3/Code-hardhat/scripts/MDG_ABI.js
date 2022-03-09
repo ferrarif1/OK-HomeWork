@@ -1,4 +1,4 @@
-var MDG_abi = [
+var mdg_abi = [
 	{
 		"inputs": [],
 		"stateMutability": "nonpayable",
