@@ -3,11 +3,11 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "./MDG.sol";
 
-contract Vault {
+contract Vault is Ownable{
 
     
     mapping(address => uint256) balancesOfMDG;
-    address public owner;
+
     MDG mdgToken;
     bool public locked;
  
@@ -19,11 +19,12 @@ contract Vault {
     }
 
     constructor(address mdgAddr) {
-        owner = msg.sender;
         mdgToken = MDG(mdgAddr);
     }
-
- 
+    //合约自我授权
+    function approveMDG(uint amount)public onlyOwner{
+        mdgToken.approve(address(this),amount);
+    } 
 
     function deposit(uint amount)public{
         require(amount > 0, "amount should > 0");

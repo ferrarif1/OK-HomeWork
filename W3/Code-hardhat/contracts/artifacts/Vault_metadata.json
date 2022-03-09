@@ -17,8 +17,40 @@
 				"type": "constructor"
 			},
 			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "previousOwner",
+						"type": "address"
+					},
+					{
+						"indexed": true,
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "OwnershipTransferred",
+				"type": "event"
+			},
+			{
 				"stateMutability": "payable",
 				"type": "fallback"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "approveMDG",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
 			},
 			{
 				"inputs": [
@@ -80,6 +112,26 @@
 			},
 			{
 				"inputs": [],
+				"name": "renounceOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "newOwner",
+						"type": "address"
+					}
+				],
+				"name": "transferOwnership",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
 				"name": "withdraw",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -92,7 +144,17 @@
 		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"owner()": {
+					"details": "Returns the address of the current owner."
+				},
+				"renounceOwnership()": {
+					"details": "Leaves the contract without owner. It will not be possible to call `onlyOwner` functions anymore. Can only be called by the current owner. NOTE: Renouncing ownership will leave the contract without an owner, thereby removing any functionality that is only available to the owner."
+				},
+				"transferOwnership(address)": {
+					"details": "Transfers ownership of the contract to a new account (`newOwner`). Can only be called by the current owner."
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
@@ -166,11 +228,11 @@
 			]
 		},
 		"Code-hardhat/contracts/Vault.sol": {
-			"keccak256": "0xadb2e4afa80af2f18caaaecd38b897e0c876810bc215eb08992a952f24881418",
+			"keccak256": "0x06c2c4b14f8702feb1c5f9bc4032948a989b9b6cfd5b25cebe0862014877b0f9",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://cecb6b175dcb8af3f3b5feff113864f3842e86d14e00d19caaa47b5d9f50a3c5",
-				"dweb:/ipfs/QmXvM8DhUWsHV46xKeRJZg7FTeUnnnFKMsDKtUVocwaPbo"
+				"bzz-raw://efb8f1e0fd72791f3b34e649948ba172e4dd8f7794341af15e2f4ae38edefa1a",
+				"dweb:/ipfs/Qmc8Sf1mHuVeLrEfzcDsFyNPe4aDAVbXnA5DSjs9qeoBdk"
 			]
 		},
 		"hardhat/console.sol": {
