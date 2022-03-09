@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>OneRingNFT front-end</title>
+  <script language="javascript" type="text/javascript"
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://unpkg.com/@metamask/detect-provider/dist/detect-provider.min.js"></script>
+  <script language="javascript" type="text/javascript" src="./scripts/web3.min.js"></script>
+  <script language="javascript" type="text/javascript" src="./scripts/MDG_ABI.js"></script>
+
+
+</head>
+
+<body>
+  <div id="BalancesOfAddr"></div>
+  <div id="txStatus"></div>
+  <div id="ConnectedAccount"></div>
+  <input type="text" id="toAddr" oninput="getInputAddr();" onporpertychange="getInputAddr();" placeholder="input address">
+  <input type="text" id="amount" oninput="getAmount();" onporpertychange="getAmount();" placeholder="input amount">
+  <button class="Approve btn">CreateOneRingNFTBtn</button>
+  <button class="Transfer btn">connectButton</button>
+
+  <script>
+
+  /*
+  deploy txid:0x09a0b1190c1502ca66439153a287e46798825003945fb00cdec4356eb37c77c6
+  */
+    var MDGContract;
+    var MDGAddress = "0x24DDacC4C894663DC336Ca7dC9a1237791bD0C5e";
+
+
+    var web3js = window.web3 ? new Web3(window.web3.currentProvider) : new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/v3/de1e8657274a494aa59476341cafc010"));;
+
+    function startApp() {
+      console.log(" ******  start App   ******")
+      //合约通过已经在goerli网络部署的地址和相应的ABI文件实例化为变量 之后通过这个变量调用相应合约函数 实现与链上数据的交互
+      MDGContract = new web3js.eth.Contract(MDG_abi, MDGAddress);
+      OneRingNFTMarketPlaceAddress = new web3js.eth.Contract(oneRingNftMarketplaceABI, OneRingNFTMarketPlaceAddress);
+
+      //test
+      ownerOf(1).then(function (result, error) {
+        if (error) {
+          console.log(error);
+        }
+        else {
+          var strA = "0x0000000000000000000000000000000000000000";
+          var strB = new String(result);
+          if (strA == strB) {
+            console.log("NFT not exist!")
+          } else if (OneRingNFTMarketPlaceAddress == strB) {
+            console.log("Current OwnerOfNFTId is OneRingNFTMarketPlaceAddress" + OneRingNFTMarketPlaceAddress);
+          } else {
+            console.log("Current OwnerOfNFTId is : " + JSON.stringify(result));
+          }
+        }
+      });
+
+      //获取metamask账户
+      connect();
+    }
+
+
+    // 等待用户确定连接时，应该禁用申请访问账户的按钮，因为必须确认后才能进行下面操作
+    async function connect() {
+      ethereum
+        .request({ method: 'eth_requestAccounts' })
+        .then(
+          $("#ConnectAccount").text(web3.eth.accounts[0])
+        )
+        .catch((err) => {
+          if (err.code === 4001) {
+            // 用户拒绝连接
+            console.log('Please connect to MetaMask.');
+          } else {
+            console.error(err);
+          }
+        });
+    }
+    /*
+    涉及交易的直接调用合约完成
+    查询的很少一部分调用合约，另外一部分后台数据库完成
+    以下全部列出
+    */
+    /***********************************************************     MDG     **************************************************************************/
+
+    ///交易
+    function mint(to, amount) {
+      $("#txStatus").text("Creating OneRingNFT on the blockchain. This may take a while...");
+      //value = 1000000000000000 = 0.001 ETH
+      return OneRingNFT.methods.safeMint(tokenUrl)
+        .send({ from: web3.eth.accounts[0] })
+        .on("receipt", function (receipt) {
+          $("#txStatus").text(receipt);
+        })
+        .on("error", function (error) {
+          $("#txStatus").text(error);
+        });
+    }
+
+    function registerNewCollection(collectionName) {
+      return OneRingNFT.methods.registerNewCollection(collectionName)
+        .send({ from: web3.eth.accounts[0] })
+        .on("receipt", function (receipt) {
+          $("#txStatus").text(receipt);
+        })
+        .on("error", function (error) {
+          $("#txStatus").text(error);
+        });
+    }
+
+    function addTokenIdToCollection(tokenId, collectionName) {
+      return OneRingNFT.methods.addTokenIdToCollection(tokenId, collectionName)
+        .send({ from: web3.eth.accounts[0] })
+        .on("receipt", function (receipt) {
+          $("#txStatus").text(receipt);
+        })
+        .on("error", function (error) {
+          $("#txStatus").text(error);
+        });
+    }
+
+    ///查询      
+    //NFT 没有上架调用这个 上架后调用OneRingNFTMarketPlace的originalOwnerOfNFTId
+    //如果上架了，将返回合约地址
+    function ownerOf(id) {
+      return OneRingNFT.methods.ownerOf(id).call();
+    }
+
+    function ownerOfCollectionName(collectionName) {
+      return OneRingNFT.methods.ownerOfCollectionName(collectionName).call();
+    }
+
+    function tokenURI(id) {
+      return OneRingNFT.methods.tokenURI(id).call();
+    }
+
+
+   
+    /***********************************************************      UI     **************************************************************************/
+
+    const CreateOneRingNFTBtn = document.querySelector('.CreateOneRingNFTBtn');
+
+    CreateOneRingNFTBtn.addEventListener('click', () => {
+      mintOneRingNFT("ipfs://ipfsHash" + getRandomInt(10000000)).then(function (result, error) {
+        if (error) {
+          console.log(error)
+        }
+        else {
+          console.log("Mint Success !: " + JSON.stringify(result));
+        }
+      });
+    });
+    
+    // 如果获取用户失败，应该让用户重新点击按钮连接。
+    const ConnectBtn = document.querySelector('.connectButton');
+    ConnectBtn.addEventListener('click', () => connect());
+
+
+    function getInputAddr(){
+	    toaddr = document.getElementById("toAddr").value;
+	  	console.log("getInputAddr = " + toaddr);
+	  }
+    /*
+***********************************************************     Metamask check      *****************************************************************************************
+ 
+What metamask do is inject javascript into the document when you access it. The browser will execute this javascript, and is that execution that will define de variable web3.
+
+But when you are accessing a document by accessing the file (your url will start with file://) then metamask will not inject the javascript, so the variable web3 will be undefined.
+
+Try accessing your file through a web server of some sort and it will work.
+Metamask参考文档：
+https://docs.metamask.io/guide/ethereum-provider.html#errors
+ 
+ */
+
+
+    window.addEventListener('load', function () {
+      const provider = detectEthereumProvider();
+      if (provider) {
+        // From now on, this should always be true:
+        // provider === window.ethereum
+        startApp(provider); // initialize your app
+        //获取链Id
+        const chainId = ethereum.request({ method: 'eth_chainId' });
+        ethereum.on('chainChanged', handleChainChanged);
+        ethereum.on('accountsChanged', handleAccountsChanged);
+      } else {
+        console.log('Please install MetaMask!');
+      }
+    })
+
+
+
+
+
+    function handleChainChanged(_chainId) {
+      // 建议刷新页面，因为连接的节点不同了。
+      window.location.reload();
+    }
+
+    function handleAccountsChanged(accounts) {
+      if (accounts.length === 0) {
+        // 未连接钱包或者钱包锁定了
+        console.log('Please connect to MetaMask.');
+      } else {
+        $("#ConnectAccount").text(web3.eth.accounts[0]);
+      }
+    }
+
+  </script>
+</body>
+
+</html>
