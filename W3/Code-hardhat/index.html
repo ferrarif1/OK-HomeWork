@@ -17,10 +17,18 @@
   <div id="BalancesOfAddr"></div>
   <div id="txStatus"></div>
   <div id="ConnectedAccount"></div>
+
   <input type="text" id="toAddr" oninput="getInputAddr();" onporpertychange="getInputAddr();" placeholder="input address">
   <input type="text" id="amount" oninput="getAmount();" onporpertychange="getAmount();" placeholder="input amount">
-  <button class="Approve btn">CreateOneRingNFTBtn</button>
-  <button class="Transfer btn">connectButton</button>
+
+  <button class="MDGApproveBtn btn">ApproveMDGBtn</button>
+  <button class="MDGTransferBtn btn">ApproveMDGBtn</button>
+  <button class="MDGMintBtn btn">ApproveMDGBtn</button>
+  <button class="MDGBalanceBtn btn">ApproveMDGBtn</button>
+  <button class="VaultApproveMDGForVaultBtn btn">ApproveMDGBtn</button>
+  <button class="VaultDepositMDGForVaultBtn btn">ApproveMDGBtn</button>
+  <button class="VaultWithdrawBtn btn">ApproveMDGBtn</button>
+  <button class="VaultMDGBalanceOfAddressInVaultBtn btn">ApproveMDGBtn</button>
 
   <script>
 
@@ -39,24 +47,7 @@
       MDGContract = new web3js.eth.Contract(mdg_abi, MDGAddress);
       VaultContract = new web3js.eth.Contract(vault_abi, VaultAddress);
 
-      //test
-      ownerOf(1).then(function (result, error) {
-        if (error) {
-          console.log(error);
-        }
-        else {
-          var strA = "0x0000000000000000000000000000000000000000";
-          var strB = new String(result);
-          if (strA == strB) {
-            console.log("NFT not exist!")
-          } else if (OneRingNFTMarketPlaceAddress == strB) {
-            console.log("Current OwnerOfNFTId is OneRingNFTMarketPlaceAddress" + OneRingNFTMarketPlaceAddress);
-          } else {
-            console.log("Current OwnerOfNFTId is : " + JSON.stringify(result));
-          }
-        }
-      });
-
+     
       //获取metamask账户
       connect();
     }
@@ -67,7 +58,7 @@
       ethereum
         .request({ method: 'eth_requestAccounts' })
         .then(
-          $("#ConnectAccount").text(web3.eth.accounts[0])
+          $("#ConnectedAccount").text(web3.eth.accounts[0])
         )
         .catch((err) => {
           if (err.code === 4001) {
@@ -94,7 +85,7 @@
         });
     }
 
-    function transferMDG(to, amount) {
+    function transfer(to, amount) {
       return MDGContract.methods.transfer(to, amount)
         .send({ from: web3.eth.accounts[0] })
         .on("receipt", function (receipt) {
@@ -134,7 +125,7 @@
     }
 
     function depositMDGForVault(amount) {
-      $("#txStatus").text("Approving... This may take a while...");
+      $("#txStatus").text("Depositting... This may take a while...");
       return VaultContract.methods.deposit(amount)
         .send({ from: web3.eth.accounts[0] })
         .on("receipt", function (receipt) {
@@ -145,8 +136,8 @@
         });
     }
 
-    function withdrawMDGForVault() {
-      $("#txStatus").text("Approving... This may take a while...");
+    function withdrawMDG() {
+      $("#txStatus").text("Withdrawing... This may take a while...");
       return VaultContract.methods.withdraw()
         .send({ from: web3.eth.accounts[0] })
         .on("receipt", function (receipt) {
@@ -164,11 +155,40 @@
 
    
     /***********************************************************      UI     **************************************************************************/
+   /*
+   <div id="BalancesOfAddr"></div>
+  <div id="txStatus"></div>
+  <div id="ConnectedAccount"></div>
 
-    const CreateOneRingNFTBtn = document.querySelector('.CreateOneRingNFTBtn');
+  <input type="text" id="toAddr" oninput="getInputAddr();" onporpertychange="getInputAddr();" placeholder="input address">
+  <input type="text" id="amount" oninput="getAmount();" onporpertychange="getAmount();" placeholder="input amount">
 
-    CreateOneRingNFTBtn.addEventListener('click', () => {
-      mintOneRingNFT("ipfs://ipfsHash" + getRandomInt(10000000)).then(function (result, error) {
+  <button class="ApproveBtn btn">CreateOneRingNFTBtn</button>
+  <button class="TransferBtn btn">connectButton</button>
+
+
+  .then(function (result, error) {
+        if (error) {
+          console.log(error);
+        }
+        else {
+          var strA = "0x0000000000000000000000000000000000000000";
+          var strB = new String(result);
+          if (strA == strB) {
+            console.log("NFT not exist!")
+          } else if (OneRingNFTMarketPlaceAddress == strB) {
+            console.log("Current OwnerOfNFTId is OneRingNFTMarketPlaceAddress" + OneRingNFTMarketPlaceAddress);
+          } else {
+            console.log("Current OwnerOfNFTId is : " + JSON.stringify(result));
+          }
+        }
+      });
+*/
+    const approveBtn = document.querySelector('.ApproveBtn');
+    const transferBtn = document.querySelector('.TransferBtn');
+
+    approveBtn.addEventListener('click', () => {
+      approve().then(function (result, error) {
         if (error) {
           console.log(error)
         }
@@ -187,16 +207,17 @@
 	    toaddr = document.getElementById("toAddr").value;
 	  	console.log("getInputAddr = " + toaddr);
 	  }
+
+    function getAmount(){
+	    amount = document.getElementById("amount").value;
+	  	console.log("getAmount = " + amount);
+	  }
+
+    
+
+
     /*
 ***********************************************************     Metamask check      *****************************************************************************************
- 
-What metamask do is inject javascript into the document when you access it. The browser will execute this javascript, and is that execution that will define de variable web3.
-
-But when you are accessing a document by accessing the file (your url will start with file://) then metamask will not inject the javascript, so the variable web3 will be undefined.
-
-Try accessing your file through a web server of some sort and it will work.
-Metamask参考文档：
-https://docs.metamask.io/guide/ethereum-provider.html#errors
  
  */
 
@@ -230,7 +251,7 @@ https://docs.metamask.io/guide/ethereum-provider.html#errors
         // 未连接钱包或者钱包锁定了
         console.log('Please connect to MetaMask.');
       } else {
-        $("#ConnectAccount").text(web3.eth.accounts[0]);
+        $("#ConnectedAccount").text(web3.eth.accounts[0]);
       }
     }
 
