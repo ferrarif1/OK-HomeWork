@@ -21,14 +21,16 @@
   <input type="text" id="toAddr" oninput="getInputAddr();" onporpertychange="getInputAddr();" placeholder="input address">
   <input type="text" id="amount" oninput="getAmount();" onporpertychange="getAmount();" placeholder="input amount">
 
-  <button class="MDGApproveBtn btn">ApproveMDGBtn</button>
-  <button class="MDGTransferBtn btn">ApproveMDGBtn</button>
-  <button class="MDGMintBtn btn">ApproveMDGBtn</button>
-  <button class="MDGBalanceBtn btn">ApproveMDGBtn</button>
-  <button class="VaultApproveMDGForVaultBtn btn">ApproveMDGBtn</button>
-  <button class="VaultDepositMDGForVaultBtn btn">ApproveMDGBtn</button>
-  <button class="VaultWithdrawBtn btn">ApproveMDGBtn</button>
-  <button class="VaultMDGBalanceOfAddressInVaultBtn btn">ApproveMDGBtn</button>
+
+  <button class="connectButton btn">connectButton</button>
+  <button class="MDGApproveBtn btn">MDGApproveBtn</button>
+  <button class="MDGTransferBtn btn">MDGTransferBtn</button>
+  <button class="MDGMintBtn btn">MDGMintBtn</button>
+  <button class="MDGBalanceBtn btn">MDGBalanceBtn</button>
+  <button class="VaultApproveMDGForVaultBtn btn">VaultApproveMDGForVaultBtn</button>
+  <button class="VaultDepositMDGForVaultBtn btn">VaultDepositMDGForVaultBtn</button>
+  <button class="VaultWithdrawBtn btn">VaultWithdrawBtn</button>
+  <button class="VaultMDGBalanceOfAddressInVaultBtn btn">VaultMDGBalanceOfAddressInVaultBtn</button>
 
   <script>
 
@@ -163,37 +165,121 @@
   <input type="text" id="toAddr" oninput="getInputAddr();" onporpertychange="getInputAddr();" placeholder="input address">
   <input type="text" id="amount" oninput="getAmount();" onporpertychange="getAmount();" placeholder="input amount">
 
-  <button class="ApproveBtn btn">CreateOneRingNFTBtn</button>
-  <button class="TransferBtn btn">connectButton</button>
-
 
   .then(function (result, error) {
         if (error) {
           console.log(error);
         }
         else {
-          var strA = "0x0000000000000000000000000000000000000000";
           var strB = new String(result);
-          if (strA == strB) {
-            console.log("NFT not exist!")
-          } else if (OneRingNFTMarketPlaceAddress == strB) {
-            console.log("Current OwnerOfNFTId is OneRingNFTMarketPlaceAddress" + OneRingNFTMarketPlaceAddress);
-          } else {
-            console.log("Current OwnerOfNFTId is : " + JSON.stringify(result));
-          }
         }
       });
 */
-    const approveBtn = document.querySelector('.ApproveBtn');
-    const transferBtn = document.querySelector('.TransferBtn');
+    const _MDGApproveBtn = document.querySelector('.MDGApproveBtn');
+    const _MDGTransferBtn = document.querySelector('.MDGTransferBtn');
+    const _MDGMintBtn = document.querySelector('.MDGMintBtn');
+    const _MDGBalanceBtn = document.querySelector('.MDGBalanceBtn');
+    const _VaultApproveMDGForVaultBtn = document.querySelector('.VaultApproveMDGForVaultBtn');
+    const _VaultDepositMDGForVaultBtn = document.querySelector('.VaultDepositMDGForVaultBtn');
+    const _VaultWithdrawBtn = document.querySelector('.VaultWithdrawBtn');
+    const _VaultMDGBalanceOfAddressInVaultBtn = document.querySelector('.VaultMDGBalanceOfAddressInVaultBtn');
 
-    approveBtn.addEventListener('click', () => {
-      approve().then(function (result, error) {
+
+    _MDGApproveBtn.addEventListener('click', () => {
+      toaddr = document.getElementById("toAddr").value;
+      amount = document.getElementById("amount").value;
+      approve(toaddr, amount).then(function (result, error) {
         if (error) {
           console.log(error)
         }
         else {
-          console.log("Mint Success !: " + JSON.stringify(result));
+          console.log("Success !: " + JSON.stringify(result));
+        }
+      });
+    });
+
+    _MDGTransferBtn.addEventListener('click', () => {
+      toaddr = document.getElementById("toAddr").value;
+      amount = document.getElementById("amount").value;
+      transfer(toaddr, amount).then(function (result, error) {
+        if (error) {
+          console.log(error)
+        }
+        else {
+          console.log("Success !: " + JSON.stringify(result));
+        }
+      });
+    });
+
+    _MDGMintBtn.addEventListener('click', () => {
+      amount = document.getElementById("amount").value;
+      mint(amount).then(function (result, error) {
+        if (error) {
+          console.log(error)
+        }
+        else {
+          console.log("Success !: " + JSON.stringify(result));
+        }
+      });
+    });
+
+    _MDGBalanceBtn.addEventListener('click', () => {
+      toaddr = document.getElementById("toAddr").value;
+      mdgBalanceOf(toaddr).then(function (result, error) {
+        if (error) {
+          console.log(error);
+        }
+        else {
+          var strB = new String(result);
+          $("#txStatus").text("Balance = " + strB);
+        }
+      });
+    });
+
+    _VaultApproveMDGForVaultBtn.addEventListener('click', () => {
+      amount = document.getElementById("amount").value;
+      approveMDGForVault(amount).then(function (result, error) {
+        if (error) {
+          console.log(error)
+        }
+        else {
+          console.log("Success !: " + JSON.stringify(result));
+        }
+      });
+    });
+
+    _VaultDepositMDGForVaultBtn.addEventListener('click', () => {
+      amount = document.getElementById("amount").value;
+      depositMDGForVault(amount).then(function (result, error) {
+        if (error) {
+          console.log(error)
+        }
+        else {
+          console.log("Success !: " + JSON.stringify(result));
+        }
+      });
+    });
+
+    _VaultWithdrawBtn.addEventListener('click', () => {
+      withdrawMDG().then(function (result, error) {
+        if (error) {
+          console.log(error)
+        }
+        else {
+          console.log("Success !: " + JSON.stringify(result));
+        }
+      });
+    });
+
+    _VaultMDGBalanceOfAddressInVaultBtn.addEventListener('click', () => {
+      toaddr = document.getElementById("toAddr").value;
+      mdgBalanceOfAddrInVault(toaddr).then(function (result, error) {
+        if (error) {
+          console.log(error);
+        }
+        else {
+          var strB = new String(result);
+          $("#txStatus").text("Balance = " + strB);
         }
       });
     });
