@@ -10,14 +10,14 @@ import "./MyToken.sol";
 import "./WETH.sol";
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
-//
+
 contract MyTokenMarket is Ownable{
    //UniswapV2Router02
     address uv2address = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
     address wethaddress = 0xc778417E063141139Fce010982780140Aa0cD5Ab;
     address mytokenaddress = 0xFA7b29AC82cC25D50970D7E6d842B0e6a529BAeE;
     IUniswapV2Router02 uv2router = IUniswapV2Router02(uv2address);
-    MyToken mtoken = MyToken(mytokenaddress);//0xFA7b29AC82cC25D50970D7E6d842B0e6a529BAeE
+    MyToken mtoken = MyToken(mytokenaddress);
     
     constructor(){
     }
@@ -44,18 +44,6 @@ contract MyTokenMarket is Ownable{
     }
 
 
-/*
-uint256 amountOutMin, address[] path, address to, uint256 deadline
-
-
-确认路径第一个地址为WETH
-数额数组 ≈ 遍历路径数组((精确输入数额 * 储备量Out) / (储备量In * 1000 + msg.value))
-确认数额数组最后一个元素>=最小输出数额
-将数额数组[0]的数额存款ETH到WETH合约
-断言将数额数组[0]的数额的WETH发送到路径(0,1)的pair合约地址
-私有交换(数额数组,路径数组,to地址)
-
-*/
     function buyExactTokenByETH(uint amountOutMin)public payable returns(uint[] memory amounts){
             address[] memory path = new address[](2);
             path[0] = address(wethaddress);
