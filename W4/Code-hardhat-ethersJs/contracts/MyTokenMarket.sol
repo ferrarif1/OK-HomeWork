@@ -45,9 +45,9 @@ contract MyTokenMarket is Ownable{
 
 
     function buyExactTokenByETH(uint amountOutMin)public payable returns(uint[] memory amounts){
-            address[] memory path = new address[](2);
-            path[0] = address(wethaddress);
-            path[1] = address(mytokenaddress);
+        address[] memory path = new address[](2);
+        path[0] = address(wethaddress);
+        path[1] = address(mytokenaddress);
         return uv2router.swapExactETHForTokens{value: msg.value - 100000000000000000}(
             amountOutMin,
             path, 
