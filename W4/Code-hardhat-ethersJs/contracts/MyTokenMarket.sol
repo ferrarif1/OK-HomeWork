@@ -27,31 +27,33 @@ contract MyTokenMarket is Ownable{
         uint amountMyTokenDesired,
         uint amountMyTokenMin,
         uint amountETHMin
-    ) external payable returns (uint amountToken, uint amountETH, uint liquidity){
+    ) external payable {
         //本合约授权给uv2router
         mtoken.approve(address(uv2router), amountMyTokenDesired);
         bool success = mtoken.transferFrom(msg.sender, address(this), amountMyTokenDesired);
         require(success, "mtoken transfer error!");
         require(msg.value > amountETHMin, "msg.value should biggger than amountETHMin");
     
-        return uv2router.addLiquidityETH{value: msg.value - 100000000000000000}( 
-        mytokenaddress,
-        amountMyTokenDesired,
-        amountMyTokenMin,
-        amountETHMin,
-        msg.sender,
-        block.timestamp);
+        uv2router.addLiquidityETH{value: msg.value}( mytokenaddress, amountMyTokenDesired, amountMyTokenMin, amountETHMin, msg.sender,block.timestamp);
+        //Todo: deposit to masterchef
     }
 
 
     function buyExactTokenByETH(uint amountOutMin)public payable returns(uint[] memory amounts){
-        address[] memory path = new address[](2);
-        path[0] = address(wethaddress);
-        path[1] = address(mytokenaddress);
-        return uv2router.swapExactETHForTokens{value: msg.value - 100000000000000000}(
+            address[] memory path = new address[](2);
+            path[0] = address(wethaddress);
+            path[1] = address(mytokenaddress);
+        return uv2router.swapExactETHForTokens{value: msg.value}(
             amountOutMin,
             path, 
             msg.sender,
             block.timestamp);
     }
+
+    //Todo:with from sushi
+    function withdraw()public{
+
+    }
+
+
 }
