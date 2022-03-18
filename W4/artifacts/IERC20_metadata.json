@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.6.12+commit.27d51765"
+		"version": "0.8.13+commit.abaa5c0e"
 	},
 	"language": "Solidity",
 	"output": {
@@ -139,7 +139,7 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "recipient",
+						"name": "to",
 						"type": "address"
 					},
 					{
@@ -163,12 +163,12 @@
 				"inputs": [
 					{
 						"internalType": "address",
-						"name": "sender",
+						"name": "from",
 						"type": "address"
 					},
 					{
 						"internalType": "address",
-						"name": "recipient",
+						"name": "to",
 						"type": "address"
 					},
 					{
@@ -214,10 +214,10 @@
 					"details": "Returns the amount of tokens in existence."
 				},
 				"transfer(address,uint256)": {
-					"details": "Moves `amount` tokens from the caller's account to `recipient`. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
+					"details": "Moves `amount` tokens from the caller's account to `to`. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
 				},
 				"transferFrom(address,address,uint256)": {
-					"details": "Moves `amount` tokens from `sender` to `recipient` using the allowance mechanism. `amount` is then deducted from the caller's allowance. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
+					"details": "Moves `amount` tokens from `from` to `to` using the allowance mechanism. `amount` is then deducted from the caller's allowance. Returns a boolean value indicating whether the operation succeeded. Emits a {Transfer} event."
 				}
 			},
 			"version": 1
@@ -230,9 +230,9 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"MasterChef_flat.sol": "IERC20"
+			"MyTokenMarket_flat.sol": "IERC20"
 		},
-		"evmVersion": "istanbul",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"
@@ -244,11 +244,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"MasterChef_flat.sol": {
-			"keccak256": "0xabc81d28496c3bc9fb1e3c56393e680647f1d07e0437df1a69ebb88ba6bc2018",
+		"MyTokenMarket_flat.sol": {
+			"keccak256": "0xa489b67bbfdc21f599ae79891691d521f9012662c087e02d5b7224a311d047de",
 			"urls": [
-				"bzz-raw://42bcc3b3dd39ab22ee4fec075967e6600fc1fd5df1d1e9d2056dd09ae7ad7af8",
-				"dweb:/ipfs/Qmcyw3LRA6uQGPTxJMARfqzE7DduMyGJRpa4kzvY1oDdoE"
+				"bzz-raw://92d6eb8302edd1715928aebdfa907ba5b0158805b1d66ef5d242109fdd5a5402",
+				"dweb:/ipfs/QmWGbNfx7mxybuefyd8BqvBgNYJkLNwebUSYiWh8dsg22Z"
 			]
 		}
 	},

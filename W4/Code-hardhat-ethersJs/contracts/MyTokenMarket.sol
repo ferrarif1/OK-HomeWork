@@ -16,7 +16,7 @@ contract MyTokenMarket{
    */
     address uv2address = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
     address wethaddress = 0xc778417E063141139Fce010982780140Aa0cD5Ab;
-    address mytokenaddress = 0x5875C8a77ca7832591240e485Fe5FcCFc1ba7F88;//0x549F978C19a5AC86D906052639E317B57724ef44
+    address mytokenaddress = 0xBD6efD9aC4bD6082d0DCf02AF2eCB28f07017375;
     address sushiaddress = 0xf42A08C0EA66ee4A474336087A6C17E9EA6c9dE9;
     address masterchefaddress = 0xd9DFA8c6b37cfDF16668fE0465896f4A1B9b2c4F;
     IUniswapV2Router02 uv2router = IUniswapV2Router02(uv2address);
@@ -27,8 +27,8 @@ contract MyTokenMarket{
 
 /*
 先直接调用UniswapV2Router（0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D）addLiquidityETH 创建出Uniswap V2 pair（0x3a8084802a32fb9c6eee81cca61d7895a513d2b2）
-addLiquidity 调用mytoken       授权MyTokenMarket使用User      授权UniswapV2Router使用MyTokenMarket 
-depositToMasterChef调用Uniswap V2 pair    授权MasterChef使用MyTokenMarket
+addLiquidity 调用mytoken                授权MyTokenMarket使用User      授权UniswapV2Router使用MyTokenMarket 
+depositToMasterChef调用Uniswap V2 pair  授权MyTokenMarket使用User   授权MasterChef使用MyTokenMarket
 depositToMasterChef调用MasterChef（0xd9dfa8c6b37cfdf16668fe0465896f4a1b9b2c4f） add(_allocPoint,_lpToken,_withUpdate)创建poolInfo ,其中_lpToken为Uniswap V2 pair
 */
     function addLiquidity(
@@ -65,9 +65,10 @@ depositToMasterChef调用MasterChef（0xd9dfa8c6b37cfdf16668fe0465896f4a1b9b2c4f
 
 
     function withdraw(uint256 pid)public{
-        IMasterChef.UserInfo memory userInfo = masterChef.userInfo(address(this));
+        IMasterChef.UserInfo memory userInfo = masterChef.userInfo(pid, address(this));
         IMasterChef.PoolInfo memory poolInfo = masterChef.poolInfo(pid);
         masterChef.withdraw(pid,userInfo.amount);
+        IERC20(poolInfo.lpToken).approve(address(this),userInfo.amount);
         IERC20(poolInfo.lpToken).transferFrom(address(this), msg.sender,userInfo.amount);
     }
 

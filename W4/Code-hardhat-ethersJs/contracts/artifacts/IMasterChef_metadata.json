@@ -80,6 +80,11 @@
 			{
 				"inputs": [
 					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					},
+					{
 						"internalType": "address",
 						"name": "user",
 						"type": "address"
@@ -163,11 +168,11 @@
 			]
 		},
 		"Code-hardhat-ethersJs/contracts/IMasterChef.sol": {
-			"keccak256": "0xf48a186883077c194a62153bba9520b755fff708dad0b34afb8dc489ab46a981",
+			"keccak256": "0xa54400cebbdde1ae1b657a0737992b0f7a7c2a89489de1d4090067907b6ab8e7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1f0320c01e19e661223c0c74f72eafabebbc1b84e1941397a9fb241c50a00977",
-				"dweb:/ipfs/QmdovDjGXGd1A7MpeTwvd8SMjoN3NdrNZcHr6bySEVrrZ5"
+				"bzz-raw://ecf602a18acda513baad505e6729aa22402657f12b148177ec19229fa6e2ec87",
+				"dweb:/ipfs/QmVQEikF7HjDYnGwPfkTmRnZWCwKceicKyumLwBGSdFWVh"
 			]
 		}
 	},

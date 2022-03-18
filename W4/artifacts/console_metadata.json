@@ -1,0 +1,44 @@
+{
+	"compiler": {
+		"version": "0.8.13+commit.abaa5c0e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"MyTokenMarket_flat.sol": "console"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"MyTokenMarket_flat.sol": {
+			"keccak256": "0xa489b67bbfdc21f599ae79891691d521f9012662c087e02d5b7224a311d047de",
+			"urls": [
+				"bzz-raw://92d6eb8302edd1715928aebdfa907ba5b0158805b1d66ef5d242109fdd5a5402",
+				"dweb:/ipfs/QmWGbNfx7mxybuefyd8BqvBgNYJkLNwebUSYiWh8dsg22Z"
+			]
+		}
+	},
+	"version": 1
+}

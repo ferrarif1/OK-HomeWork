@@ -129,19 +129,19 @@
 			]
 		},
 		"Code-hardhat-ethersJs/contracts/IMasterChef.sol": {
-			"keccak256": "0xf48a186883077c194a62153bba9520b755fff708dad0b34afb8dc489ab46a981",
+			"keccak256": "0xa54400cebbdde1ae1b657a0737992b0f7a7c2a89489de1d4090067907b6ab8e7",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://1f0320c01e19e661223c0c74f72eafabebbc1b84e1941397a9fb241c50a00977",
-				"dweb:/ipfs/QmdovDjGXGd1A7MpeTwvd8SMjoN3NdrNZcHr6bySEVrrZ5"
+				"bzz-raw://ecf602a18acda513baad505e6729aa22402657f12b148177ec19229fa6e2ec87",
+				"dweb:/ipfs/QmVQEikF7HjDYnGwPfkTmRnZWCwKceicKyumLwBGSdFWVh"
 			]
 		},
 		"Code-hardhat-ethersJs/contracts/MyTokenMarket.sol": {
-			"keccak256": "0xf557f2b9d803fd9c2b1cff6380bf32fbb28fbde108557f2d45503bf8ee817435",
+			"keccak256": "0x4dc9acff7861f9b5c46aa8b0db2b31cc80d7f530f58853f35d2fbf3277ae52bc",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4888f7037d3b5a6254367aeff19ebe54e8e23e52ddda6591153d803e4476efe5",
-				"dweb:/ipfs/QmRHJUD3k1zWxnL7UggScQQa5vqBj8vj8wVJeNi2sRcnM1"
+				"bzz-raw://5dfa2063510a9a726f3c8c40a4019aaafe5500f0605de8b4009d40e1f6c7325d",
+				"dweb:/ipfs/QmcBntd738QHYhdZ2rCztqAfAE2WgKEPWvmHsUMpGRSaqc"
 			]
 		}
 	},

@@ -1,0 +1,45 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"details": "Library for managing https://en.wikipedia.org/wiki/Set_(abstract_data_type)[sets] of primitive types. Sets have the following properties: - Elements are added, removed, and checked for existence in constant time (O(1)). - Elements are enumerated in O(n). No guarantees are made on the ordering. ``` contract Example {     // Add the library methods     using EnumerableSet for EnumerableSet.AddressSet;     // Declare a set state variable     EnumerableSet.AddressSet private mySet; } ``` As of v3.0.0, only sets of type `address` (`AddressSet`) and `uint256` (`UintSet`) are supported.",
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Code-hardhat-ethersJs/contracts/MasterChef.sol": "EnumerableSet"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Code-hardhat-ethersJs/contracts/MasterChef.sol": {
+			"keccak256": "0x6966fbbc089eebb0c69e2f5a26f79544aee0780134820130de90f25813e29205",
+			"urls": [
+				"bzz-raw://5b3f58a3f66b0bf7e68800a6413aa91dd81bfe961732f13916346ad137716cfc",
+				"dweb:/ipfs/Qmd84zFmtmCNcXquhLgEvvbDcuVZ29JssmxcrD5ddKLqNm"
+			]
+		}
+	},
+	"version": 1
+}

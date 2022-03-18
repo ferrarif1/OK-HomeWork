@@ -52,7 +52,7 @@
 			"deposit(uint256,uint256)": "e2bbb158",
 			"poolInfo(uint256)": "1526fe27",
 			"totalAllocPoint()": "17caf6f1",
-			"userInfo(address)": "1959a002",
+			"userInfo(uint256,address)": "93f1a40b",
 			"withdraw(uint256,uint256)": "441a3e70"
 		}
 	},
@@ -131,6 +131,11 @@
 		},
 		{
 			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "_pid",
+					"type": "uint256"
+				},
 				{
 					"internalType": "address",
 					"name": "user",
