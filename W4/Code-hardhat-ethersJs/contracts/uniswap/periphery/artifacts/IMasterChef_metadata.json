@@ -1,0 +1,118 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_pid",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "deposit",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "pid",
+						"type": "uint256"
+					}
+				],
+				"name": "poolInfo",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "contract IERC20",
+								"name": "lpToken",
+								"type": "address"
+							},
+							{
+								"internalType": "uint256",
+								"name": "allocPoint",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "lastRewardBlock",
+								"type": "uint256"
+							},
+							{
+								"internalType": "uint256",
+								"name": "accSushiPerShare",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct IMasterChef.PoolInfo",
+						"name": "",
+						"type": "tuple"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "totalAllocPoint",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Code-hardhat-ethersJs/contracts/uniswap/periphery/MasterChefV2.sol": "IMasterChef"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Code-hardhat-ethersJs/contracts/uniswap/periphery/MasterChefV2.sol": {
+			"keccak256": "0xfb0853d3d778e2975dc141d1c6c3a8a2df2918774e8fcb1af8f20e9b818a6381",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7eb49348a577357629fd3d93ff19cbf3751bec88848dac0f5916f80a3816191d",
+				"dweb:/ipfs/QmdHs65KJaJP7Ph4ihVxrwgxxjRVwj7v75CWMkvkq5qYDU"
+			]
+		}
+	},
+	"version": 1
+}

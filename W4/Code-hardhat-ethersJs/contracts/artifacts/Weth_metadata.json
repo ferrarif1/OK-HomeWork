@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.12+commit.f00d7308"
+		"version": "0.8.13+commit.abaa5c0e"
 	},
 	"language": "Solidity",
 	"output": {
@@ -316,7 +316,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"localhost/Code-hardhat-ethersJs/contracts/WETH.sol": "WETH"
+			"Code-hardhat-ethersJs/contracts/WETH.sol": "WETH"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -330,7 +330,7 @@
 		"remappings": []
 	},
 	"sources": {
-		"localhost/Code-hardhat-ethersJs/contracts/WETH.sol": {
+		"Code-hardhat-ethersJs/contracts/WETH.sol": {
 			"keccak256": "0x0ff4ad78bf681367ee8b45e662cdd5dd0ef4d5a031bdb4e96f5a6e5a3ababea1",
 			"license": "MIT",
 			"urls": [
