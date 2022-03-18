@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.13+commit.abaa5c0e"
+		"version": "0.8.7+commit.e28d00a7"
 	},
 	"language": "Solidity",
 	"output": {
@@ -245,10 +245,10 @@
 	},
 	"sources": {
 		"MyTokenMarket_flat.sol": {
-			"keccak256": "0xa489b67bbfdc21f599ae79891691d521f9012662c087e02d5b7224a311d047de",
+			"keccak256": "0xd0a72e0b59f5f9b215044af318203e7fd60f1d9af0b893cb5a055ae36b5683b8",
 			"urls": [
-				"bzz-raw://92d6eb8302edd1715928aebdfa907ba5b0158805b1d66ef5d242109fdd5a5402",
-				"dweb:/ipfs/QmWGbNfx7mxybuefyd8BqvBgNYJkLNwebUSYiWh8dsg22Z"
+				"bzz-raw://cad7e5f9d03bc4a96f6885b6c6e9304dc598f5544fbc056f52cb3c07b52c8936",
+				"dweb:/ipfs/QmasnP8sforn9VSD9bnZHXeWjvnrWGy1tX8UaYEgBkFSqX"
 			]
 		}
 	},

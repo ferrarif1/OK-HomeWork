@@ -5,7 +5,7 @@ pragma solidity ^0.8.0;
 import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "./IMasterChef.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
-//0x25323EC01224c2e58Ba0988b674830C77E098EBe
+
 contract MyTokenMarket{
    //UniswapV2Router02
    /*

@@ -145,7 +145,7 @@
 	},
 	"settings": {
 		"compilationTarget": {
-			"Code-hardhat-ethersJs/contracts/IMasterChef.sol": "IMasterChef"
+			"MyTokenMarket_flat.sol": "IMasterChef"
 		},
 		"evmVersion": "london",
 		"libraries": {},
@@ -159,20 +159,11 @@
 		"remappings": []
 	},
 	"sources": {
-		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
-			"keccak256": "0xbbc8ac883ac3c0078ce5ad3e288fbb3ffcc8a30c3a98c0fda0114d64fc44fca2",
-			"license": "MIT",
+		"MyTokenMarket_flat.sol": {
+			"keccak256": "0xd0a72e0b59f5f9b215044af318203e7fd60f1d9af0b893cb5a055ae36b5683b8",
 			"urls": [
-				"bzz-raw://87a7a5d2f6f63f84598af02b8c50ca2df2631cb8ba2453e8d95fcb17e4be9824",
-				"dweb:/ipfs/QmR76hqtAcRqoFj33tmNjcWTLrgNsAaakYwnKZ8zoJtKei"
-			]
-		},
-		"Code-hardhat-ethersJs/contracts/IMasterChef.sol": {
-			"keccak256": "0xa54400cebbdde1ae1b657a0737992b0f7a7c2a89489de1d4090067907b6ab8e7",
-			"license": "MIT",
-			"urls": [
-				"bzz-raw://ecf602a18acda513baad505e6729aa22402657f12b148177ec19229fa6e2ec87",
-				"dweb:/ipfs/QmVQEikF7HjDYnGwPfkTmRnZWCwKceicKyumLwBGSdFWVh"
+				"bzz-raw://cad7e5f9d03bc4a96f6885b6c6e9304dc598f5544fbc056f52cb3c07b52c8936",
+				"dweb:/ipfs/QmasnP8sforn9VSD9bnZHXeWjvnrWGy1tX8UaYEgBkFSqX"
 			]
 		}
 	},
