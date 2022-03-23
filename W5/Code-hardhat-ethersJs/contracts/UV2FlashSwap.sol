@@ -54,6 +54,8 @@ contract UV2FlashSwap is IUniswapV2Callee {
         FUSD.approve(address(this), uint(100000000000000000000000000));
         MTT.approve(address(uv2router), uint(100000000000000000000000000));
         FUSD.approve(address(uv2router), uint(100000000000000000000000000));
+        MTT.approve(address(uv3router), uint(100000000000000000000000000));
+        FUSD.approve(address(uv3router), uint(100000000000000000000000000));
       
         address token0 = uv2pair.token0();
         address token1 = uv2pair.token1();
@@ -85,42 +87,54 @@ contract UV2FlashSwap is IUniswapV2Callee {
         //assert(msg.sender == UV2Pairaddress);//ensure that msg.sender is actually a V2 pair
         //console.log("msg.sender = ",msg.sender);
         //assert(amount0 == 0 || amount1 == 0); 
-        require(amount0 == 0 || amount1 == 0, "amount0 == 0 || amount1 == 0");
-        
-        (address token, uint256 amount) = abi.decode(data, (address, uint256));
-        console.log("data = ",token, amount);
+        // require(amount0 == 0 || amount1 == 0, "amount0 == 0 || amount1 == 0");
+       console.log("amount1 = ",amount1);
 
-        MTT.approve(address(uv3router), uint(100000000000000000000000000));
-        FUSD.approve(address(uv3router), uint(100000000000000000000000000));
 
-        address token0 = uv2pair.token0();
-        address token1 = uv2pair.token1();
+       address token0 = IUniswapV2Pair(msg.sender).token0();
+       address token1 = IUniswapV2Pair(msg.sender).token1();
+       require(msg.sender == UV2Pairaddress, "msg.sender != UV2Pairaddress");
+       require(sender == address(this), "ensure that msg.sender is actually a V2 pair");
+
+       (address tokenBorrow, uint256 amount) = abi.decode(data, (address, uint256));
+
+       uint256 fee = ((amount * 3) / 997) + 1;
+       uint256 amountRequired = amount + fee;
+
         address[] memory path = new address[](2);
         path[0] = address(token0);
         path[1] = address(token1);
         
-    
-        if(amount0 > 0){
-           uint amountRequired = UniswapV2Library.getAmountsIn(UniswapV2Factoryaddress, amount0, path)[0];
-           console.log("amountRequired = ",amountRequired);
-           uint256 fee = ((amount0 * 3) / 997) + 1;
-           amountRequired = amountRequired + fee;
-          // 1FUSD->1.xMTT v3->v2
-           IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(FUSDaddress, MTTaddress, 3000, address(this), 0, 0, 0);
-           uint256 amountReceived = uv3router.exactInputSingle(param);
-           console.log("amountReceived = ",amountReceived);
-           require(amountReceived > amountRequired, "amountReceived > amountRequired");// fail if we didn't get enough tokens back to repay our flash loan
-           require(MTT.transfer(UV2Pairaddress, amountRequired),"return tokens to V2 pair");
-           require(MTT.transfer(sender,amountReceived-amountRequired),"keep the rest! (tokens)");
-        }else{
-           uint amountRequired = UniswapV2Library.getAmountsIn(UniswapV2Factoryaddress, amount0, path)[0];
-           console.log("amountRequired = ",amountRequired);
-           uint256 fee = ((amount0 * 3) / 997) + 1;
-           amountRequired = amountRequired + fee;
-           MTT.transfer(UV2Pairaddress,amountRequired);
-        }
-       
+        
+        /*
+         struct ExactInputSingleParams {
+        address tokenIn;
+        address tokenOut;
+        uint24 fee;
+        address recipient;
+        uint256 amountIn;
+        uint256 amountOutMinimum;
+        uint160 sqrtPriceLimitX96;
+    }
 
+    /// @notice Swaps `amountIn` of one token for as much as possible of another token
+    /// @dev Setting `amountIn` to 0 will cause the contract to look up its own balance,
+    /// and swap the entire amount, enabling contracts to send tokens before calling this function.
+    /// @param params The parameters necessary for the swap, encoded as `ExactInputSingleParams` in calldata
+    /// @return amountOut The amount of the received token
+        */
+        //  uint amountOut = UniswapV2Library.getAmountsIn(UniswapV2Factoryaddress, amount, path)[0];
+        uint256 amountReceived;
+        uint256 amountin = amountRequired - 3000;
+        if(amount0 > 0){
+           IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(FUSDaddress, MTTaddress, 3000, address(this), amountin, 0, 0);
+           amountReceived = uv3router.exactInputSingle(param);
+        }else{
+           IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(MTTaddress, FUSDaddress, 3000, address(this), amountin, 0, 0);
+           amountReceived = uv3router.exactInputSingle(param);
+        }
+       // IERC20(tokenBorrow).transfer(UV2Pairaddress, amountRequired);
+        IERC20(tokenBorrow).transfer(sender, amountReceived-amountRequired);
     }
 
 
