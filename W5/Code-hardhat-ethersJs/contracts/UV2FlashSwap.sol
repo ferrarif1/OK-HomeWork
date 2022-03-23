@@ -1,20 +1,27 @@
 // SPDX-License-Identifier: MIT
 
-pragma solidity =0.6.0;
+pragma solidity ^0.8.0;
 
-import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Callee.sol";
+import "hardhat/console.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol";
 import "@uniswap/v2-core/contracts/interfaces/IUniswapV2Factory.sol";
-import "@uniswap/v2-periphery/contracts/libraries/UniswapV2Library.sol";
+import "./uniswap/periphery/libraries/UniswapV2Library.sol";
+import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 
-import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
-import "@uniswap/swap-router-contracts/contracts/interfaces/ISwapRouter02.sol";
+// import "@uniswap/v3-periphery/contracts/interfaces/INonfungiblePositionManager.sol";
+import "@uniswap/swap-router-contracts/contracts/interfaces/IV3SwapRouter.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 /*
 V2: 1 MTT = 1 FUSD
 V3: 1 MTT = 0.5 FUSD
 */
+
+
+interface IUniswapV2Callee {
+    function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external;
+}
+
 
 contract UV2FlashSwap is IUniswapV2Callee {
     address UniswapV2Router02address = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
@@ -25,66 +32,96 @@ contract UV2FlashSwap is IUniswapV2Callee {
    
     address MTTaddress = 0x1862af5148ba4B8F48d9c512865DeC136025dC25;
     address FUSDaddress = 0xE91Df3FB3a027b32432AD91a93a6a0118486AF61;
-    address UV2Pairaddress = 0x69AAbcC32124Ff3d3aCe6d6CD1808e33EC4F9b37;
+    address UV2Pairaddress = 0x69AAbcC32124Ff3d3aCe6d6CD1808e33EC4F9b37;//V2 pair
     uint256 UV3tokenId = 16562;
     
 
     IUniswapV2Router02 uv2router = IUniswapV2Router02(UniswapV2Router02address);//exchange v2 
     IUniswapV2Factory uv2factory = IUniswapV2Factory(UniswapV2Factoryaddress);
-    INonfungiblePositionManager uv3posmanager = INonfungiblePositionManager(UNIV3POSaddress);
-    ISwapRouter02 uv3router = ISwapRouter02(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data) deadline：1648969613
+    IV3SwapRouter uv3router = IV3SwapRouter(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data) deadline：1648969613
     IERC20 MTT = IERC20(MTTaddress);
     IERC20 FUSD = IERC20(FUSDaddress);
     
+    IUniswapV2Pair uv2pair = IUniswapV2Pair(UV2Pairaddress);
 
 
-    constructor() public {
+    constructor() {
     }
 
 
-    // gets tokens/WETH via a V2 flash swap, swaps for the ETH/tokens on V1, repays V2, and keeps the rest!
+    function testFlashLoan(address _tokenBorrow, uint256 _amount)public{
+        MTT.approve(address(this), uint(100000000000000000000000000));
+        FUSD.approve(address(this), uint(100000000000000000000000000));
+        MTT.approve(address(uv2router), uint(100000000000000000000000000));
+        FUSD.approve(address(uv2router), uint(100000000000000000000000000));
+      
+        address token0 = uv2pair.token0();
+        address token1 = uv2pair.token1();
+        uint256 amount0Out = _tokenBorrow == token0 ? _amount : 0;
+        uint256 amount1Out = _tokenBorrow == token1 ? _amount : 0;
+
+        if(_tokenBorrow == MTTaddress){
+            bool success1 = MTT.transferFrom(msg.sender, address(this), _amount);
+            require(success1, "MTT transfer error!");
+        }else{
+            bool success2 = FUSD.transferFrom(msg.sender, address(this), _amount);
+            require(success2, "FUSD transfer error!");
+        }
+
+        //V2:0.1 MTT->0.1 FUSD
+        bytes memory data = abi.encode(MTTaddress, _amount);
+        IUniswapV2Pair(uv2pair).swap(amount0Out, amount1Out, address(this), data);
+    }
+
+    
+    /*
+    V2:1 MTT->1 FUSD
+    V3:1FUSD->1.xMTT
+    1 MTT -> V2 
+    0.x MTT->sender
+    */
+
     function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external override {
+        //assert(msg.sender == UV2Pairaddress);//ensure that msg.sender is actually a V2 pair
+        //console.log("msg.sender = ",msg.sender);
+        //assert(amount0 == 0 || amount1 == 0); 
+        require(amount0 == 0 || amount1 == 0, "amount0 == 0 || amount1 == 0");
+        
+        (address token, uint256 amount) = abi.decode(data, (address, uint256));
+        console.log("data = ",token, amount);
+
+        MTT.approve(address(uv3router), uint(100000000000000000000000000));
+        FUSD.approve(address(uv3router), uint(100000000000000000000000000));
+
+        address token0 = uv2pair.token0();
+        address token1 = uv2pair.token1();
         address[] memory path = new address[](2);
-        path[0] = address(MTTaddress);
-        path[1] = address(FUSDaddress);
-
-
-
-
-
-        { // scope for token{0,1}, avoids stack too deep errors
-        address token0 = IUniswapV2Pair(msg.sender).token0();
-        address token1 = IUniswapV2Pair(msg.sender).token1();
-        assert(msg.sender == UniswapV2Library.pairFor(factory, token0, token1)); // ensure that msg.sender is actually a V2 pair
-        assert(amount0 == 0 || amount1 == 0); // this strategy is unidirectional
-        path[0] = amount0 == 0 ? token0 : token1;
-        path[1] = amount0 == 0 ? token1 : token0;
-        amountToken = token0 == address(WETH) ? amount1 : amount0;
-        amountETH = token0 == address(WETH) ? amount0 : amount1;
+        path[0] = address(token0);
+        path[1] = address(token1);
+        
+    
+        if(amount0 > 0){
+           uint amountRequired = UniswapV2Library.getAmountsIn(UniswapV2Factoryaddress, amount0, path)[0];
+           console.log("amountRequired = ",amountRequired);
+           uint256 fee = ((amount0 * 3) / 997) + 1;
+           amountRequired = amountRequired + fee;
+          // 1FUSD->1.xMTT v3->v2
+           IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(FUSDaddress, MTTaddress, 3000, address(this), 0, 0, 0);
+           uint256 amountReceived = uv3router.exactInputSingle(param);
+           console.log("amountReceived = ",amountReceived);
+           require(amountReceived > amountRequired, "amountReceived > amountRequired");// fail if we didn't get enough tokens back to repay our flash loan
+           require(MTT.transfer(UV2Pairaddress, amountRequired),"return tokens to V2 pair");
+           require(MTT.transfer(sender,amountReceived-amountRequired),"keep the rest! (tokens)");
+        }else{
+           uint amountRequired = UniswapV2Library.getAmountsIn(UniswapV2Factoryaddress, amount0, path)[0];
+           console.log("amountRequired = ",amountRequired);
+           uint256 fee = ((amount0 * 3) / 997) + 1;
+           amountRequired = amountRequired + fee;
+           MTT.transfer(UV2Pairaddress,amountRequired);
         }
+       
 
-        assert(path[0] == address(WETH) || path[1] == address(WETH)); // this strategy only works with a V2 WETH pair
-        IERC20 token = IERC20(path[0] == address(WETH) ? path[1] : path[0]);
-        IUniswapV1Exchange exchangeV1 = IUniswapV1Exchange(factoryV1.getExchange(address(token))); // get V1 exchange
-
-        if (amountToken > 0) {
-            (uint minETH) = abi.decode(data, (uint)); // slippage parameter for V1, passed in by caller
-            token.approve(address(exchangeV1), amountToken);
-            uint amountReceived = exchangeV1.tokenToEthSwapInput(amountToken, minETH, uint(-1));
-            uint amountRequired = UniswapV2Library.getAmountsIn(factory, amountToken, path)[0];
-            assert(amountReceived > amountRequired); // fail if we didn't get enough ETH back to repay our flash loan
-            WETH.deposit{value: amountRequired}();
-            assert(WETH.transfer(msg.sender, amountRequired)); // return WETH to V2 pair
-            (bool success,) = sender.call{value: amountReceived - amountRequired}(new bytes(0)); // keep the rest! (ETH)
-            assert(success);
-        } else {
-            (uint minTokens) = abi.decode(data, (uint)); // slippage parameter for V1, passed in by caller
-            WETH.withdraw(amountETH);
-            uint amountReceived = exchangeV1.ethToTokenSwapInput{value: amountETH}(minTokens, uint(-1));
-            uint amountRequired = UniswapV2Library.getAmountsIn(factory, amountETH, path)[0];
-            assert(amountReceived > amountRequired); // fail if we didn't get enough tokens back to repay our flash loan
-            assert(token.transfer(msg.sender, amountRequired)); // return tokens to V2 pair
-            assert(token.transfer(sender, amountReceived - amountRequired)); // keep the rest! (tokens)
-        }
     }
+
+
 }

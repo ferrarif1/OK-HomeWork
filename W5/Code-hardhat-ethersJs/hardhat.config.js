@@ -9,7 +9,7 @@ const PRIVATE_KEY4 = "debe4df7d8dc9fd85c040290959e301c82d9c31c4adc57555b30dd0c4f
 
 const Goerli_PRIVATE_KEY = "a50419f1862215f5f64168246e978da104b649b7beca8b2bc91227cfc8424853";
 module.exports = {
-  solidity: "^0.8.0",
+  solidity: "^0.6.5",
   networks: {
 
     ganache: {
