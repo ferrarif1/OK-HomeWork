@@ -1,0 +1,60 @@
+{
+	"deploy": {
+		"VM:-": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"main:1": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"ropsten:3": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"rinkeby:4": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"kovan:42": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"görli:5": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		},
+		"Custom": {
+			"linkReferences": {},
+			"autoDeployLib": true
+		}
+	},
+	"data": {
+		"bytecode": {
+			"linkReferences": {},
+			"object": "60566023600b82828239805160001a607314601657fe5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212205f68d7d8bb9ac28a058510485cc68b85be263e42e6e14ebd9df2e72f20bc604864736f6c634300060c0033",
+			"opcodes": "PUSH1 0x56 PUSH1 0x23 PUSH1 0xB DUP3 DUP3 DUP3 CODECOPY DUP1 MLOAD PUSH1 0x0 BYTE PUSH1 0x73 EQ PUSH1 0x16 JUMPI INVALID JUMPDEST ADDRESS PUSH1 0x0 MSTORE PUSH1 0x73 DUP2 MSTORE8 DUP3 DUP2 RETURN INVALID PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0x5F PUSH9 0xD7D8BB9AC28A058510 0x48 0x5C 0xC6 DUP12 DUP6 0xBE 0x26 RETURNDATACOPY TIMESTAMP 0xE6 0xE1 0x4E 0xBD SWAP14 CALLCODE 0xE7 0x2F KECCAK256 0xBC PUSH1 0x48 PUSH5 0x736F6C6343 STOP MOD 0xC STOP CALLER ",
+			"sourceMap": "4171:311:0:-:0;;;;;;;;;;;;;;;;;;;;;;;;;"
+		},
+		"deployedBytecode": {
+			"immutableReferences": {},
+			"linkReferences": {},
+			"object": "73000000000000000000000000000000000000000030146080604052600080fdfea26469706673582212205f68d7d8bb9ac28a058510485cc68b85be263e42e6e14ebd9df2e72f20bc604864736f6c634300060c0033",
+			"opcodes": "PUSH20 0x0 ADDRESS EQ PUSH1 0x80 PUSH1 0x40 MSTORE PUSH1 0x0 DUP1 REVERT INVALID LOG2 PUSH5 0x6970667358 0x22 SLT KECCAK256 0x5F PUSH9 0xD7D8BB9AC28A058510 0x48 0x5C 0xC6 DUP12 DUP6 0xBE 0x26 RETURNDATACOPY TIMESTAMP 0xE6 0xE1 0x4E 0xBD SWAP14 CALLCODE 0xE7 0x2F KECCAK256 0xBC PUSH1 0x48 PUSH5 0x736F6C6343 STOP MOD 0xC STOP CALLER ",
+			"sourceMap": "4171:311:0:-:0;;;;;;;;"
+		},
+		"gasEstimates": {
+			"creation": {
+				"codeDepositCost": "17200",
+				"executionCost": "97",
+				"totalCost": "17297"
+			},
+			"internal": {
+				"add(uint128,uint128)": "infinite",
+				"sub(uint128,uint128)": "infinite"
+			}
+		},
+		"methodIdentifiers": {}
+	},
+	"abi": []
+}
