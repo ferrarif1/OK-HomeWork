@@ -127,13 +127,13 @@ contract UV2FlashSwap is IUniswapV2Callee {
         uint256 amountReceived;
         uint256 amountin = amountRequired - 3000;
         if(amount0 > 0){
-           IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(FUSDaddress, MTTaddress, 3000, address(this), amountin, 0, 0);
+           IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(FUSDaddress, MTTaddress, 3000, address(this), amountRequired, 0, 0);
            amountReceived = uv3router.exactInputSingle(param);
         }else{
-           IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(MTTaddress, FUSDaddress, 3000, address(this), amountin, 0, 0);
+           IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(MTTaddress, FUSDaddress, 3000, address(this), amountRequired, 0, 0);
            amountReceived = uv3router.exactInputSingle(param);
         }
-       // IERC20(tokenBorrow).transfer(UV2Pairaddress, amountRequired);
+        IERC20(tokenBorrow).transfer(UV2Pairaddress, amountRequired);//address(this) = UV2Pairaddress 
         IERC20(tokenBorrow).transfer(sender, amountReceived-amountRequired);
     }
 
