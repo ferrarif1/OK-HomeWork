@@ -1,0 +1,67 @@
+{
+	"id": "2e96e50f64fa076380e54cea87917d53",
+	"_format": "hh-sol-build-info-1",
+	"solcVersion": "0.8.13",
+	"solcLongVersion": "0.8.13+commit.abaa5c0e",
+	"input": {
+		"language": "Solidity",
+		"sources": {
+			"Code-hardhat-ethersJs/contracts/UV2FlashSwap.sol": {
+				"content": "// SPDX-License-Identifier: MIT\n\npragma solidity ^0.8.0;\n\n\n// interface IUniswapV2Callee {\n//   function uniswapV2Call(address sender, uint amount0, uint amount1, bytes calldata data) external;\n//   // function uniswapV2Call(address sender, uint amount0, uint amount1, bytes data) external;\n// }"
+			}
+		},
+		"settings": {
+			"optimizer": {
+				"enabled": false,
+				"runs": 200
+			},
+			"outputSelection": {
+				"*": {
+					"": [
+						"ast"
+					],
+					"*": [
+						"abi",
+						"metadata",
+						"devdoc",
+						"userdoc",
+						"evm.legacyAssembly",
+						"evm.bytecode",
+						"evm.deployedBytecode",
+						"evm.methodIdentifiers",
+						"evm.gasEstimates",
+						"evm.assembly"
+					]
+				}
+			}
+		}
+	},
+	"output": {
+		"sources": {
+			"Code-hardhat-ethersJs/contracts/UV2FlashSwap.sol": {
+				"ast": {
+					"absolutePath": "Code-hardhat-ethersJs/contracts/UV2FlashSwap.sol",
+					"exportedSymbols": {},
+					"id": 2,
+					"license": "MIT",
+					"nodeType": "SourceUnit",
+					"nodes": [
+						{
+							"id": 1,
+							"literals": [
+								"solidity",
+								"^",
+								"0.8",
+								".0"
+							],
+							"nodeType": "PragmaDirective",
+							"src": "33:23:0"
+						}
+					],
+					"src": "33:262:0"
+				},
+				"id": 0
+			}
+		}
+	}
+}
