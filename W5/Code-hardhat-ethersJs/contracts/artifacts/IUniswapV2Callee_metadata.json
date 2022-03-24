@@ -114,11 +114,11 @@
 			]
 		},
 		"Code-hardhat-ethersJs/contracts/UV2FlashSwap.sol": {
-			"keccak256": "0x45c636f5c18e35f87881f86da9ea02f619477aafb0a3e12e2e8c11b6ac8b8321",
+			"keccak256": "0x3cbb0d41ccb78853152827dfe2d089be31381acf5909342db3ac41144c0caf4f",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://8f2f8476b99cce16b8386b5dffc091718f2b4a4db9b4b42fb6334c088150b5ce",
-				"dweb:/ipfs/QmcngpobB5znmz2afDixbU5ipcef5EpLrnQygu7mKzFrfx"
+				"bzz-raw://e77a757101f9b9922467fb3bd4a7589647065da40bb1b73de806586b09080c98",
+				"dweb:/ipfs/QmbGzVXcCzn2vx76eXi53tHGva49njBB81JMfgmxmEHbzs"
 			]
 		},
 		"Code-hardhat-ethersJs/contracts/uniswap/periphery/libraries/SafeMath.sol": {
