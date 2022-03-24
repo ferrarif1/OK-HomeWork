@@ -108,7 +108,7 @@ contract UV2FlashSwap is IUniswapV2Callee {
            amountReceived = uv3router.exactInputSingle(param);
         }
         require(amountReceived > amountShouldIN, "amountReceived <= amountShouldIN");
-        IERC20(tokenBorrow).transfer(UV2Pairaddress, amountShouldIN);//address(this) = UV2Pairaddress 
+        IERC20(tokenBorrow).transfer(UV2Pairaddress, amountShouldIN); 
         IERC20(tokenBorrow).transfer(sender, amountReceived-amountShouldIN);
     }
 
