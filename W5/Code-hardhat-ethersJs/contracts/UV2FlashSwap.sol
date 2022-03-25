@@ -134,5 +134,18 @@ contract UV2FlashSwap is IUniswapV2Callee {
         return amountReceived;
     }
 
+    address aaveKoven = 0x88757f2f99175387aB4C6a4b3067c77A695b0349;
+    /*
+    aave 
+    • 调⽤ Pool 合约的 flashLoanSimple() 或 flashLoan()
+    • Pool 合约将所借资产转到调⽤者指定的 receiver 合约地址
+    • Pool 合约调⽤ receiver 合约的 executeOperation()
+    • receiver 合约的 executeOperation() 执⾏⾃⼰的逻辑
+    • receiver 合约的 executeOperation() 授权给Pool 合约所借⾦额+⼿续费
+    • Pool 合约调⽤ safeTransferFrom() 从 receiver 转账过来 
+    */
+    function testAAVE(){
+        
+    }
 
 }
