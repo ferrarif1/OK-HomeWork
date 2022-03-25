@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.0+commit.c7dfd78e"
+		"version": "0.8.13+commit.abaa5c0e"
 	},
 	"language": "Solidity",
 	"output": {
@@ -299,7 +299,7 @@
 		"compilationTarget": {
 			".deps/npm/@uniswap/swap-router-contracts/contracts/interfaces/IV3SwapRouter.sol": "IV3SwapRouter"
 		},
-		"evmVersion": "istanbul",
+		"evmVersion": "london",
 		"libraries": {},
 		"metadata": {
 			"bytecodeHash": "ipfs"

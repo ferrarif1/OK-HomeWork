@@ -12,10 +12,6 @@ import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "@uniswap/swap-router-contracts/contracts/interfaces/IV3SwapRouter.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-//aave
-import {IFlashLoanSimpleReceiver} from "@aave/core-v3/contracts/flashloan/interfaces/IFlashLoanSimpleReceiver.sol";
-import {IPoolAddressesProvider} from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
-import {IPool} from "@aave/core-v3/contracts/interfaces/IPool.sol";
 
 /*
 V2: 1 MTT = 1 FUSD
@@ -41,43 +37,16 @@ contract UV2FlashSwap is IUniswapV2Callee {
     address UV2Pairaddress = 0x69AAbcC32124Ff3d3aCe6d6CD1808e33EC4F9b37;//V2 pair
     uint256 UV3tokenId = 16562;
 
-   //aave
-    address public constant AAVE_ATOKEN_WETH = 0x87b1f4cf9BD63f7BBD3eE1aD04E8F52540349347;
-
-    address public constant AAVE_LENDING_POOL_ADDRESSES_PROVIDER = 0x88757f2f99175387aB4C6a4b3067c77A695b0349;
-
-    address public constant WETH = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
-
-    IPoolAddressesProvider public immutable override ADDRESSES_PROVIDER;
-    IPool public immutable override POOL;
+    //uniswap
+    IUniswapV2Router02 uv2router = IUniswapV2Router02(UniswapV2Router02address);//exchange v2 
+    IUniswapV2Factory uv2factory = IUniswapV2Factory(UniswapV2Factoryaddress);
+    IV3SwapRouter uv3router = IV3SwapRouter(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data) deadline：1648969613
+    IERC20 MTT = IERC20(MTTaddress);
+    IERC20 FUSD = IERC20(FUSDaddress);
+    IUniswapV2Pair uv2pair = IUniswapV2Pair(UV2Pairaddress);
 
     constructor() {
-        //uniswap
-        IUniswapV2Router02 uv2router = IUniswapV2Router02(UniswapV2Router02address);//exchange v2 
-        IUniswapV2Factory uv2factory = IUniswapV2Factory(UniswapV2Factoryaddress);
-        IV3SwapRouter uv3router = IV3SwapRouter(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data) deadline：1648969613
-        IERC20 MTT = IERC20(MTTaddress);
-        IERC20 FUSD = IERC20(FUSDaddress);
-        IUniswapV2Pair uv2pair = IUniswapV2Pair(UV2Pairaddress);
-        //aave
-        ADDRESSES_PROVIDER = IPoolAddressesProvider(AAVE_LENDING_POOL_ADDRESSES_PROVIDER);
-        POOL = IPool(ADDRESSES_PROVIDER.getPool());
     }
-
-/*          AAVE             */
-    /*
-    aave 
-    • 调⽤ Pool 合约的 flashLoanSimple() 或 flashLoan()
-    • Pool 合约将所借资产转到调⽤者指定的 receiver 合约地址
-    • Pool 合约调⽤ receiver 合约的 executeOperation()
-    • receiver 合约的 executeOperation() 执⾏⾃⼰的逻辑
-    • receiver 合约的 executeOperation() 授权给Pool 合约所借⾦额+⼿续费
-    • Pool 合约调⽤ safeTransferFrom() 从 receiver 转账过来 
-    */
-    function testAAVE() public {
-        
-    }
-
 
 
 /*          UV2 - UV3             */

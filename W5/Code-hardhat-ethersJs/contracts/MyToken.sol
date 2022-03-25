@@ -8,7 +8,7 @@ contract MyToken is ERC20{
    
    
     constructor() ERC20("MyToken", "MTT") {
-        _mint(msg.sender, 1000000000000000000);
+
     }
 
     function mint(uint256 amount) external{
