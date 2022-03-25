@@ -7,6 +7,7 @@ import "@uniswap/swap-router-contracts/contracts/interfaces/IV3SwapRouter.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 //aave
+import {SafeMath} from "@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeMath.sol";
 import {IFlashLoanSimpleReceiver} from "@aave/core-v3/contracts/flashloan/interfaces/IFlashLoanSimpleReceiver.sol";
 import {IPoolAddressesProvider} from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
 import {IPool} from "@aave/core-v3/contracts/interfaces/IPool.sol";
@@ -18,6 +19,9 @@ V3: 1 MTT = 0.5 FUSD
 
 
 contract AAVETest is IFlashLoanSimpleReceiver {
+    using SafeMath for uint256;
+
+   
     //uniswap v2 v3
     address UniswapV2Router02address = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
     address UniswapV2Factoryaddress = 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f;
@@ -26,7 +30,7 @@ contract AAVETest is IFlashLoanSimpleReceiver {
     address SwapRouter02address = 0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45;
     //my tokens
     address MTTaddress = 0x8Ca302E2B04ECDb5d14Cced580A379b40e8eD8b7;
-    address Linkaddress = 0xa36085F69e2889c224210F603D836748e7dC0088;
+    address Linkaddress = 0xa36085F69e2889c224210F603D836748e7dC0088;// 0xa36085F69e2889c224210F603D836748e7dC0088
     //addLiquidity https://kovan.etherscan.io/tx/0x3eb3b9d23eeec8c94775cb87197fa087feab5bbb854e913c362c3421898ccd59
     address UV2Pairaddress = 0x69F9e353F7411479912d2E9F3e436aE83486C17B;//V2 pair
     //addLiquidity https://kovan.etherscan.io/tx/0x577836b44db5c729beb32fdc1ce27ebbc3e9347fa34959860ff2e258e4b2694a
@@ -35,21 +39,24 @@ contract AAVETest is IFlashLoanSimpleReceiver {
    //aave
     address AAVE_ATOKEN_WETH = 0x87b1f4cf9BD63f7BBD3eE1aD04E8F52540349347;
     address AAVE_LENDING_POOL_ADDRESSES_PROVIDER = 0x88757f2f99175387aB4C6a4b3067c77A695b0349;
-    address POOL = 0xE0fBa4Fc209b4948668006B2bE61711b7f465bAe;
+    address POOLaddress = 0x2646FcF7F0AbB1ff279ED9845AdE04019C907EBE;
 
 
-    IPool public immutable override POOL;
+    
     //uniswap
     IUniswapV2Router02 uv2router = IUniswapV2Router02(UniswapV2Router02address);//exchange v2 
     IV3SwapRouter uv3router = IV3SwapRouter(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data) deadline：1648969613
     IERC20 MTT = IERC20(MTTaddress);
-    IERC20 FUSD = IERC20(FUSDaddress);
+    IERC20 LINK = IERC20(Linkaddress);
+
 
     //aave
-    IPoolAddressesProvider public immutable override  ADDRESSES_PROVIDER = IPoolAddressesProvider(AAVE_LENDING_POOL_ADDRESSES_PROVIDER);
+    IPoolAddressesProvider public immutable override ADDRESSES_PROVIDER;
+    IPool public immutable override POOL;
 
     constructor() {
-        POOL = IPool(ADDRESSES_PROVIDER.getPool());
+        ADDRESSES_PROVIDER = IPoolAddressesProvider(0x88757f2f99175387aB4C6a4b3067c77A695b0349);
+        POOL = IPool(0x2646FcF7F0AbB1ff279ED9845AdE04019C907EBE);
     }
 
 /*          AAVE             */
@@ -65,13 +72,22 @@ contract AAVETest is IFlashLoanSimpleReceiver {
     function testAAVE(uint256 _amount) public {
         address receiverAddress = address(this);
 
-        address asset = Linkaddress;
-        uint256 amount = _amount;
+        address[] memory assets = new address[](1);
+        assets[0] = Linkaddress;
+        uint256[] memory amounts = new uint256[](1);
+        amounts[0] = _amount;
+        uint256[] memory interestRateModes = new uint256[](1);
+        interestRateModes[0] = 0;//0 -> Don't open any debt, just revert if funds can't be transferred from the receiver
+
 
         bytes memory params = "";
         uint16 referralCode = 0;
-
-        POOL.flashLoanSimple(receiverAddress, asset, amount, params, referralCode);
+        MTT.approve(address(uv2router), uint(100000000000000000000000000));
+        MTT.approve(address(uv3router), uint(100000000000000000000000000));
+        LINK.approve(address(uv2router), uint(100000000000000000000000000));
+        LINK.approve(address(uv3router), uint(100000000000000000000000000));
+    
+        POOL.flashLoan(receiverAddress, assets, amounts, interestRateModes, receiverAddress, params,referralCode);
     }
 
     function executeOperation(
@@ -84,30 +100,24 @@ contract AAVETest is IFlashLoanSimpleReceiver {
 
         // Approve the LendingPool contract allowance to *pull* the owed amount
         //amount 需要还的link数量
-        uint256 amountOwing = amount.add(premium);
-        
+        uint256 amountOwing = amount +premium;
+        IERC20(asset).approve(address(POOL), amountOwing);
+        // address[] memory path = new address[](2);
+        // path[0] = Linkaddress;
+        // path[1] = MTTaddress;
+        // //v2：1 link = 1000 MTT
+        // //v3: 1 link = 100 MTT
+        // //amount 个 link 在 v2 换 amountOut 个 MTT 
+        // //amountOut 个 MTT 在 v3 换 amountReceived 个 link
+        // uint amountOut = IUniswapV2Router01(uv2router).swapExactTokensForTokens(amount, 1, path, address(this), block.timestamp)[1];
+        // IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(MTTaddress, Linkaddress, 3000, address(this), amountOut, 0, 0);
+        // uint amountReceived = uv3router.exactInputSingle(param);
 
-        MTT.approve(address(uv2router), uint(100000000000000000000000000));
-        MTT.approve(address(uv3router), uint(100000000000000000000000000));
-      
-        bytes memory data = bytes(0);
-
-        address[] memory path = new address[](2);
-        path[0] = Linkaddress;
-        path[1] = MTTaddress;
-        //v2：1 link = 1000 MTT
-        //v3: 1 link = 100 MTT
-        //amount 个 link 在 v2 换 amountOut 个 MTT 
-        //amountOut 个 MTT 在 v3 换 amountReceived 个 link
-        uint amountOut = uv2router.swapExactTokensForTokens(amount, 1, path, address(this), block.timestamp)[0];
-        IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(MTTaddress, Linkaddress, 3000, address(this), amountOut, 0, 0);
-        amountReceived = uv3router.exactInputSingle(param);
-
-        if(amountReceived > amountOwing){//成功才还钱
-            IERC20(asset).approve(address(POOL), amountOwing);
-        }else{
-            IERC20(asset).approve(address(POOL), 0);
-        }
+        // if(amountReceived > amountOwing){//成功才还钱
+        //     IERC20(asset).approve(address(POOL), amountOwing);
+        // }else{
+        //     IERC20(asset).approve(address(POOL), 0);
+        // }
         return true;
     }
     
