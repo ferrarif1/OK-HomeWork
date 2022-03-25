@@ -95,17 +95,19 @@ contract UV2FlashSwap is IUniswapV2Callee {
         //https://docs.uniswap.org/protocol/V2/reference/smart-contracts/library
         uint amountShouldIN;
         uint256 amountReceived;
-       
+
         if(amountFUSD > 0){
            FUSD.approve(address(SwapRouter02address), uint(100000000000000000000000000));
            amountShouldIN = UniswapV2Library.getAmountsIn(UniswapV2Factoryaddress, amountFUSD, path)[0];//MTT数量
            IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(FUSDaddress, MTTaddress, 3000, address(this), amount, 0, 0);
            amountReceived = uv3router.exactInputSingle(param);
+           tokenBorrow = MTTaddress;
         }else{
            MTT.approve(address(SwapRouter02address), uint(100000000000000000000000000));
            amountShouldIN = UniswapV2Library.getAmountsIn(UniswapV2Factoryaddress, amountMTT, path)[0];//FUSD数量
            IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(MTTaddress, FUSDaddress, 3000, address(this), amount, 0, 0);
            amountReceived = uv3router.exactInputSingle(param);
+           tokenBorrow = FUSDaddress;
         }
         require(amountReceived > amountShouldIN, "amountReceived <= amountShouldIN");
         IERC20(tokenBorrow).transfer(UV2Pairaddress, amountShouldIN); 
