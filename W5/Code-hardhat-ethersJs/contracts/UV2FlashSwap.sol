@@ -12,6 +12,11 @@ import "@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol";
 import "@uniswap/swap-router-contracts/contracts/interfaces/IV3SwapRouter.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+//aave
+import {IFlashLoanSimpleReceiver} from "@aave/core-v3/contracts/flashloan/interfaces/IFlashLoanSimpleReceiver.sol";
+import {IPoolAddressesProvider} from "@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol";
+import {IPool} from "@aave/core-v3/contracts/interfaces/IPool.sol";
+
 /*
 V2: 1 MTT = 1 FUSD
 V3: 1 MTT = 0.5 FUSD
@@ -24,30 +29,58 @@ interface IUniswapV2Callee {
 
 
 contract UV2FlashSwap is IUniswapV2Callee {
+    //uniswap v2 v3
     address UniswapV2Router02address = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
     address UniswapV2Factoryaddress = 0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f;
     address UNIV3POSaddress = 0xC36442b4a4522E871399CD717aBDD847Ab11FE88;
     address UniswapV3Factoryaddress = 0x1F98431c8aD98523631AE4a59f267346ea31F984;
     address SwapRouter02address = 0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45;
-   
+    //my tokens
     address MTTaddress = 0x1862af5148ba4B8F48d9c512865DeC136025dC25;
     address FUSDaddress = 0xE91Df3FB3a027b32432AD91a93a6a0118486AF61;
     address UV2Pairaddress = 0x69AAbcC32124Ff3d3aCe6d6CD1808e33EC4F9b37;//V2 pair
     uint256 UV3tokenId = 16562;
-    
 
-    IUniswapV2Router02 uv2router = IUniswapV2Router02(UniswapV2Router02address);//exchange v2 
-    IUniswapV2Factory uv2factory = IUniswapV2Factory(UniswapV2Factoryaddress);
-    IV3SwapRouter uv3router = IV3SwapRouter(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data) deadline：1648969613
-    IERC20 MTT = IERC20(MTTaddress);
-    IERC20 FUSD = IERC20(FUSDaddress);
-    
-    IUniswapV2Pair uv2pair = IUniswapV2Pair(UV2Pairaddress);
+   //aave
+    address public constant AAVE_ATOKEN_WETH = 0x87b1f4cf9BD63f7BBD3eE1aD04E8F52540349347;
 
+    address public constant AAVE_LENDING_POOL_ADDRESSES_PROVIDER = 0x88757f2f99175387aB4C6a4b3067c77A695b0349;
+
+    address public constant WETH = 0xd0A1E359811322d97991E03f863a0C30C2cF029C;
+
+    IPoolAddressesProvider public immutable override ADDRESSES_PROVIDER;
+    IPool public immutable override POOL;
 
     constructor() {
+        //uniswap
+        IUniswapV2Router02 uv2router = IUniswapV2Router02(UniswapV2Router02address);//exchange v2 
+        IUniswapV2Factory uv2factory = IUniswapV2Factory(UniswapV2Factoryaddress);
+        IV3SwapRouter uv3router = IV3SwapRouter(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data) deadline：1648969613
+        IERC20 MTT = IERC20(MTTaddress);
+        IERC20 FUSD = IERC20(FUSDaddress);
+        IUniswapV2Pair uv2pair = IUniswapV2Pair(UV2Pairaddress);
+        //aave
+        ADDRESSES_PROVIDER = IPoolAddressesProvider(AAVE_LENDING_POOL_ADDRESSES_PROVIDER);
+        POOL = IPool(ADDRESSES_PROVIDER.getPool());
     }
 
+/*          AAVE             */
+    /*
+    aave 
+    • 调⽤ Pool 合约的 flashLoanSimple() 或 flashLoan()
+    • Pool 合约将所借资产转到调⽤者指定的 receiver 合约地址
+    • Pool 合约调⽤ receiver 合约的 executeOperation()
+    • receiver 合约的 executeOperation() 执⾏⾃⼰的逻辑
+    • receiver 合约的 executeOperation() 授权给Pool 合约所借⾦额+⼿续费
+    • Pool 合约调⽤ safeTransferFrom() 从 receiver 转账过来 
+    */
+    function testAAVE() public {
+        
+    }
+
+
+
+/*          UV2 - UV3             */
 
     function testFlashLoan(address _tokenBorrow, uint256 _amount)public{
       
@@ -114,7 +147,7 @@ contract UV2FlashSwap is IUniswapV2Callee {
         IERC20(tokenBorrow).transfer(sender, amountReceived-amountShouldIN);
     }
 
-
+    //test UV3
     function testUV3(uint8 choose, uint256 amount) public returns(uint256){
         MTT.approve(address(this), uint(100000000000000000000000000));
         FUSD.approve(address(this), uint(100000000000000000000000000));
@@ -134,18 +167,6 @@ contract UV2FlashSwap is IUniswapV2Callee {
         return amountReceived;
     }
 
-    address aaveKoven = 0x88757f2f99175387aB4C6a4b3067c77A695b0349;
-    /*
-    aave 
-    • 调⽤ Pool 合约的 flashLoanSimple() 或 flashLoan()
-    • Pool 合约将所借资产转到调⽤者指定的 receiver 合约地址
-    • Pool 合约调⽤ receiver 合约的 executeOperation()
-    • receiver 合约的 executeOperation() 执⾏⾃⼰的逻辑
-    • receiver 合约的 executeOperation() 授权给Pool 合约所借⾦额+⼿续费
-    • Pool 合约调⽤ safeTransferFrom() 从 receiver 转账过来 
-    */
-    function testAAVE(){
-        
-    }
+    
 
 }
