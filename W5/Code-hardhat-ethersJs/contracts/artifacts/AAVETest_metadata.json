@@ -78,12 +78,35 @@
 			{
 				"inputs": [
 					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					},
+					{
 						"internalType": "uint256",
 						"name": "_amount",
 						"type": "uint256"
 					}
 				],
 				"name": "testAAVE",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "testAAVESimple",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -213,11 +236,11 @@
 			]
 		},
 		"Code-hardhat-ethersJs/contracts/AAVETest.sol": {
-			"keccak256": "0xb96bea39cb55eb50cdc203cddc15d7c2924774103d6375ea94327ccb091d96a8",
+			"keccak256": "0xeb12607e5dc3bb0b05fe9a796db41b97cc94c61b78d02f04df287061a6305fae",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://4846a40161b30e9c8e9e3145c1272cb7177664e8a1fa2bc82815b6c104739420",
-				"dweb:/ipfs/QmQTEZaYpersJJtYGFL9mQ43Aa4nvXsZhP9AZfZZcoue3v"
+				"bzz-raw://9f125dff8c27f892d04a529f6366f076928564003215128f9c0729f5603f5d74",
+				"dweb:/ipfs/QmYAqLT31gxxeVDPUhiR982Reo5DnU7Ak67WuCuPdaXHo5"
 			]
 		}
 	},

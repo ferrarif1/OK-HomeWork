@@ -13,14 +13,14 @@ import {IPoolAddressesProvider} from "@aave/core-v3/contracts/interfaces/IPoolAd
 import {IPool} from "@aave/core-v3/contracts/interfaces/IPool.sol";
 
 /*
-V2: 1 MTT = 1 FUSD
-V3: 1 MTT = 0.5 FUSD
+aave testnet address
+https://docs.aave.com/developers/deployed-contracts/v3-testnet-addresses
 */
 
 
 contract AAVETest is IFlashLoanSimpleReceiver {
     using SafeMath for uint256;
-
+    
    
     //uniswap v2 v3
     address UniswapV2Router02address = 0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D;
@@ -29,25 +29,39 @@ contract AAVETest is IFlashLoanSimpleReceiver {
     address UniswapV3Factoryaddress = 0x1F98431c8aD98523631AE4a59f267346ea31F984;
     address SwapRouter02address = 0x68b3465833fb72A70ecDF485E0e4C7bD8665Fc45;
     //my tokens
-    address MTTaddress = 0x8Ca302E2B04ECDb5d14Cced580A379b40e8eD8b7;
-    address Linkaddress = 0xa36085F69e2889c224210F603D836748e7dC0088;// 0xa36085F69e2889c224210F603D836748e7dC0088
+    address MTTaddress = 0xB9b56CE66C63DB98E6CDdacDF910C227294a8840;
+    address AAVEaddress = 0x953af320e2bD3041c4e56BB3a30E7f613a1f3C1A;
+    address DAIaddress = 0x2Ec4c6fCdBF5F9beECeB1b51848fc2DB1f3a26af;
     //addLiquidity https://kovan.etherscan.io/tx/0x3eb3b9d23eeec8c94775cb87197fa087feab5bbb854e913c362c3421898ccd59
-    address UV2Pairaddress = 0x69F9e353F7411479912d2E9F3e436aE83486C17B;//V2 pair
+    address UV2Pairaddress = 0x91337CcD2eDF1dF2D252f563B27341D52EEdbe78;//V2 pair
     //addLiquidity https://kovan.etherscan.io/tx/0x577836b44db5c729beb32fdc1ce27ebbc3e9347fa34959860ff2e258e4b2694a
     uint256 UV3tokenId = 10961;
 
-   //aave
-    address AAVE_ATOKEN_WETH = 0x87b1f4cf9BD63f7BBD3eE1aD04E8F52540349347;
-    address AAVE_LENDING_POOL_ADDRESSES_PROVIDER = 0x88757f2f99175387aB4C6a4b3067c77A695b0349;
-    address POOLaddress = 0x2646FcF7F0AbB1ff279ED9845AdE04019C907EBE;
+
+/*
+koven:
+PoolAddressesProvider-Aave 0x651b8A8cA545b251a8f49B57D5838Da0a8DFbEF9 Pool-Proxy-Aave 0x329462f8ed05E5FfBF6dfB84106e76B69e6B1F94   
+rinkeby:
+PoolAddressesProvider-Aave  0xBA6378f1c1D046e9EB0F538560BA7558546edF3C Pool-Proxy-Aave 0xE039BdF1d874d27338e09B55CB09879Dedca52D8 
+rinkeby2: 0xA55125A90d75a95EC00130E8E8C197dB5641Eb19 aave 0x953af320e2bD3041c4e56BB3a30E7f613a1f3C1A 
+FTM testnet
+PoolAddressesProvider-Fantom 0xE339D30cBa24C70dCCb82B234589E3C83249e658 Pool-Proxy-Fantom 0x771A45a19cE333a19356694C5fc80c76fe9bc741 
+v2-v3:
+LendingPool -> Pool
+LendingPoolAddressesProvider -> PoolAddressesProvider
+ProtocolDataProvider -> PoolDataProvider
+*/
+
+    address PoolAddressesProvider = 0xA55125A90d75a95EC00130E8E8C197dB5641Eb19;//
 
 
     
     //uniswap
     IUniswapV2Router02 uv2router = IUniswapV2Router02(UniswapV2Router02address);//exchange v2 
-    IV3SwapRouter uv3router = IV3SwapRouter(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data) deadline：1648969613
+    IV3SwapRouter uv3router = IV3SwapRouter(SwapRouter02address);//exchange v3 multicall(uint256 deadline, bytes[] data)
     IERC20 MTT = IERC20(MTTaddress);
-    IERC20 LINK = IERC20(Linkaddress);
+    IERC20 AAVE = IERC20(AAVEaddress);
+    IERC20 DAI = IERC20(DAIaddress);
 
 
     //aave
@@ -55,8 +69,8 @@ contract AAVETest is IFlashLoanSimpleReceiver {
     IPool public immutable override POOL;
 
     constructor() {
-        ADDRESSES_PROVIDER = IPoolAddressesProvider(0x88757f2f99175387aB4C6a4b3067c77A695b0349);
-        POOL = IPool(0x2646FcF7F0AbB1ff279ED9845AdE04019C907EBE);
+        ADDRESSES_PROVIDER = IPoolAddressesProvider(PoolAddressesProvider);
+        POOL = IPool(ADDRESSES_PROVIDER.getPool());
     }
 
 /*          AAVE             */
@@ -69,11 +83,11 @@ contract AAVETest is IFlashLoanSimpleReceiver {
     • receiver 合约的 executeOperation() 授权给Pool 合约所借⾦额+⼿续费
     • Pool 合约调⽤ safeTransferFrom() 从 receiver 转账过来 
     */
-    function testAAVE(uint256 _amount) public {
+    function testAAVE(address asset,uint256 _amount) public {
         address receiverAddress = address(this);
 
         address[] memory assets = new address[](1);
-        assets[0] = Linkaddress;
+        assets[0] = asset;
         uint256[] memory amounts = new uint256[](1);
         amounts[0] = _amount;
         uint256[] memory interestRateModes = new uint256[](1);
@@ -84,10 +98,21 @@ contract AAVETest is IFlashLoanSimpleReceiver {
         uint16 referralCode = 0;
         MTT.approve(address(uv2router), uint(100000000000000000000000000));
         MTT.approve(address(uv3router), uint(100000000000000000000000000));
-        LINK.approve(address(uv2router), uint(100000000000000000000000000));
-        LINK.approve(address(uv3router), uint(100000000000000000000000000));
+        DAI.approve(address(uv2router), uint(100000000000000000000000000));
+        DAI.approve(address(uv3router), uint(100000000000000000000000000));
     
         POOL.flashLoan(receiverAddress, assets, amounts, interestRateModes, receiverAddress, params,referralCode);
+    }
+
+    function testAAVESimple(address asset,uint256 amount) public {
+        address receiver = address(this);
+        bytes memory params = "";
+        uint16 referralCode = 0;
+        MTT.approve(address(uv2router), uint(100000000000000000000000000));
+        MTT.approve(address(uv3router), uint(100000000000000000000000000));
+        DAI.approve(address(uv2router), uint(100000000000000000000000000));
+        DAI.approve(address(uv3router), uint(100000000000000000000000000));
+        POOL.flashLoanSimple(receiver, asset, amount, params, referralCode);
     }
 
     function executeOperation(
@@ -100,24 +125,24 @@ contract AAVETest is IFlashLoanSimpleReceiver {
 
         // Approve the LendingPool contract allowance to *pull* the owed amount
         //amount 需要还的link数量
-        uint256 amountOwing = amount +premium;
+        uint256 amountOwing = amount.add(premium);
         IERC20(asset).approve(address(POOL), amountOwing);
-        // address[] memory path = new address[](2);
-        // path[0] = Linkaddress;
-        // path[1] = MTTaddress;
-        // //v2：1 link = 1000 MTT
-        // //v3: 1 link = 100 MTT
-        // //amount 个 link 在 v2 换 amountOut 个 MTT 
-        // //amountOut 个 MTT 在 v3 换 amountReceived 个 link
-        // uint amountOut = IUniswapV2Router01(uv2router).swapExactTokensForTokens(amount, 1, path, address(this), block.timestamp)[1];
-        // IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(MTTaddress, Linkaddress, 3000, address(this), amountOut, 0, 0);
-        // uint amountReceived = uv3router.exactInputSingle(param);
+        address[] memory path = new address[](2);
+        path[0] = DAIaddress;
+        path[1] = MTTaddress;
+        //v2：1 dai = 1000 MTT
+        //v3: 1 dai = 100 MTT
+        //amount 个 dai 在 v2 换 amountOut 个 MTT 
+        //amountOut 个 MTT 在 v3 换 amountReceived 个 dai
+        uint amountOut = IUniswapV2Router01(uv2router).swapExactTokensForTokens(amount, 1, path, address(this), block.timestamp)[1];
+        IV3SwapRouter.ExactInputSingleParams memory param = IV3SwapRouter.ExactInputSingleParams(MTTaddress, DAIaddress, 3000, address(this), amountOut, 0, 0);
+        uint amountReceived = uv3router.exactInputSingle(param);
 
-        // if(amountReceived > amountOwing){//成功才还钱
-        //     IERC20(asset).approve(address(POOL), amountOwing);
-        // }else{
-        //     IERC20(asset).approve(address(POOL), 0);
-        // }
+        if(amountReceived > amountOwing){//成功才还钱
+       //     IERC20(asset).approve(address(POOL), amountOwing);
+        }else{
+        //    IERC20(asset).approve(address(POOL), 0);
+        }
         return true;
     }
     
