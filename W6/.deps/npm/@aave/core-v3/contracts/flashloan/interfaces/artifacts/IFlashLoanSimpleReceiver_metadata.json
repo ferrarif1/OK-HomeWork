@@ -1,0 +1,157 @@
+{
+	"compiler": {
+		"version": "0.8.10+commit.fc410830"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"name": "ADDRESSES_PROVIDER",
+				"outputs": [
+					{
+						"internalType": "contract IPoolAddressesProvider",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "POOL",
+				"outputs": [
+					{
+						"internalType": "contract IPool",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "premium",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "initiator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "params",
+						"type": "bytes"
+					}
+				],
+				"name": "executeOperation",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"author": "Aave",
+			"details": "Implement this interface to develop a flashloan-compatible flashLoanReceiver contract*",
+			"kind": "dev",
+			"methods": {
+				"executeOperation(address,uint256,uint256,address,bytes)": {
+					"details": "Ensure that the contract can return the debt + premium, e.g., has      enough funds to repay and has approved the Pool to pull the total amount",
+					"params": {
+						"amount": "The amount of the flash-borrowed asset",
+						"asset": "The address of the flash-borrowed asset",
+						"initiator": "The address of the flashloan initiator",
+						"params": "The byte-encoded params passed when initiating the flashloan",
+						"premium": "The fee of the flash-borrowed asset"
+					},
+					"returns": {
+						"_0": "True if the execution of the operation succeeds, false otherwise"
+					}
+				}
+			},
+			"title": "IFlashLoanSimpleReceiver",
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"executeOperation(address,uint256,uint256,address,bytes)": {
+					"notice": "Executes an operation after receiving the flash-borrowed asset"
+				}
+			},
+			"notice": "Defines the basic interface of a flashloan-receiver contract.",
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			".deps/npm/@aave/core-v3/contracts/flashloan/interfaces/IFlashLoanSimpleReceiver.sol": "IFlashLoanSimpleReceiver"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		".deps/npm/@aave/core-v3/contracts/flashloan/interfaces/IFlashLoanSimpleReceiver.sol": {
+			"keccak256": "0x8bd048533af4616e2701267daa15af490ee9dd8cf1e7808829f8c0777b256ed9",
+			"license": "AGPL-3.0",
+			"urls": [
+				"bzz-raw://7010319440fab878354f8114868808eaeb157ff1256801e9180aa86953451284",
+				"dweb:/ipfs/QmaFpQATQBdFozaiffCQ84opt2g2MDaP6nWQ9Xxc1MBsEo"
+			]
+		},
+		".deps/npm/@aave/core-v3/contracts/interfaces/IPool.sol": {
+			"keccak256": "0x71a2d4598a4d7f7f34188e2114d7cc2208a372a2d9361c42c744f6d48e7a72cd",
+			"license": "AGPL-3.0",
+			"urls": [
+				"bzz-raw://ba0ebc00e0845521ef0f32190954bae554c1525cc3da6657c527f6a3f471a0bd",
+				"dweb:/ipfs/QmRR2KbdXaEY2ciDTEEUYUnxCQ95otFiRzcPHYDxNd7WUx"
+			]
+		},
+		".deps/npm/@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol": {
+			"keccak256": "0x73185cd3b952eb691bbf2344b3f7a35cf8b67b33c39275e52e12b80436ea1d5c",
+			"license": "AGPL-3.0",
+			"urls": [
+				"bzz-raw://ed19048938ec0806b0a227a49bf58e04456974fae4d649ce1f189c394d73898e",
+				"dweb:/ipfs/QmSAVn8e6zX2aYWhDibLZxgZFDz3Y5CvTKYBXgutRtBYTP"
+			]
+		},
+		".deps/npm/@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol": {
+			"keccak256": "0xf3acc235689aae1094d33bfdf90e60b0c3ae1f12c5f095b8cffb69bc6880765c",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://2937f3e23de07b40eec53b9afb88cdfaf20a86e308c0cfc722092c73983260c0",
+				"dweb:/ipfs/QmP9wdVoab7hDTg2aUW9LYBVcyy4iwEpj5FzmoozkpXSWn"
+			]
+		}
+	},
+	"version": 1
+}

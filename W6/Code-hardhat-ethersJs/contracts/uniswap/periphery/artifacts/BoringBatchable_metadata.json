@@ -1,0 +1,141 @@
+{
+	"compiler": {
+		"version": "0.6.12+commit.27d51765"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [
+					{
+						"internalType": "bytes[]",
+						"name": "calls",
+						"type": "bytes[]"
+					},
+					{
+						"internalType": "bool",
+						"name": "revertOnFail",
+						"type": "bool"
+					}
+				],
+				"name": "batch",
+				"outputs": [
+					{
+						"internalType": "bool[]",
+						"name": "successes",
+						"type": "bool[]"
+					},
+					{
+						"internalType": "bytes[]",
+						"name": "results",
+						"type": "bytes[]"
+					}
+				],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "contract IERC20",
+						"name": "token",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "from",
+						"type": "address"
+					},
+					{
+						"internalType": "address",
+						"name": "to",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "deadline",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint8",
+						"name": "v",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "r",
+						"type": "bytes32"
+					},
+					{
+						"internalType": "bytes32",
+						"name": "s",
+						"type": "bytes32"
+					}
+				],
+				"name": "permitToken",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"batch(bytes[],bool)": {
+					"params": {
+						"calls": "An array of inputs for each call.",
+						"revertOnFail": "If True then reverts after a failed call and stops doing further calls."
+					},
+					"returns": {
+						"results": "An array with the returned data of each function call, mapped one-to-one to `calls`.",
+						"successes": "An array indicating the success of a call, mapped one-to-one to `calls`."
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"batch(bytes[],bool)": {
+					"notice": "Allows batched call to self (this contract)."
+				},
+				"permitToken(address,address,address,uint256,uint256,uint8,bytes32,bytes32)": {
+					"notice": "Call wrapper that performs `ERC20.permit` on `token`. Lookup `IERC20.permit`."
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Code-hardhat-ethersJs/contracts/uniswap/periphery/MasterChefV2.sol": "BoringBatchable"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Code-hardhat-ethersJs/contracts/uniswap/periphery/MasterChefV2.sol": {
+			"keccak256": "0xfb0853d3d778e2975dc141d1c6c3a8a2df2918774e8fcb1af8f20e9b818a6381",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://7eb49348a577357629fd3d93ff19cbf3751bec88848dac0f5916f80a3816191d",
+				"dweb:/ipfs/QmdHs65KJaJP7Ph4ihVxrwgxxjRVwj7v75CWMkvkq5qYDU"
+			]
+		}
+	},
+	"version": 1
+}

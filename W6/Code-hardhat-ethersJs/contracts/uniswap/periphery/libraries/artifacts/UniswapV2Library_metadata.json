@@ -1,0 +1,58 @@
+{
+	"compiler": {
+		"version": "0.8.0+commit.c7dfd78e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Code-hardhat-ethersJs/contracts/uniswap/periphery/libraries/UniswapV2Library.sol": "UniswapV2Library"
+		},
+		"evmVersion": "istanbul",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@uniswap/v2-core/contracts/interfaces/IUniswapV2Pair.sol": {
+			"keccak256": "0x7c9bc70e5996c763e02ff38905282bc24fb242b0ef2519a003b36824fc524a4b",
+			"urls": [
+				"bzz-raw://85d5ad2dd23ee127f40907a12865a1e8cb5828814f6f2480285e1827dd72dedf",
+				"dweb:/ipfs/QmayKQWJgWmr46DqWseADyUanmqxh662hPNdAkdHRjiQQH"
+			]
+		},
+		"Code-hardhat-ethersJs/contracts/uniswap/periphery/libraries/SafeMath.sol": {
+			"keccak256": "0x647c79e89740251966158af962e6ccf827d20849399daf95c847776afbd5a9a0",
+			"urls": [
+				"bzz-raw://14b2234ce6ffe2e94972bf4ecfe8fe0ddc8894d53222891ff0c95604717c0bc7",
+				"dweb:/ipfs/QmNuZgeu2KKeFPta3QzwKxdutTZoh6q4wynU5utNEvtB64"
+			]
+		},
+		"Code-hardhat-ethersJs/contracts/uniswap/periphery/libraries/UniswapV2Library.sol": {
+			"keccak256": "0x5eb7d416d413eb6aa0b30d763a96576dbe6e00ee57a4a644d4748bad6f502f6a",
+			"urls": [
+				"bzz-raw://9c85372360bb8472079a4c20365f916a62f6aacd4d55515d5a027358335fb655",
+				"dweb:/ipfs/QmeE1UtiM7Z73XX8xVok4hATGztoZYMZX2azsDC9QHqUyz"
+			]
+		}
+	},
+	"version": 1
+}

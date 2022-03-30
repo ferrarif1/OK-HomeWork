@@ -1,0 +1,248 @@
+{
+	"compiler": {
+		"version": "0.8.10+commit.fc410830"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [],
+				"name": "ADDRESSES_PROVIDER",
+				"outputs": [
+					{
+						"internalType": "contract IPoolAddressesProvider",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "POOL",
+				"outputs": [
+					{
+						"internalType": "contract IPool",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "premium",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "initiator",
+						"type": "address"
+					},
+					{
+						"internalType": "bytes",
+						"name": "params",
+						"type": "bytes"
+					}
+				],
+				"name": "executeOperation",
+				"outputs": [
+					{
+						"internalType": "bool",
+						"name": "",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_amount",
+						"type": "uint256"
+					}
+				],
+				"name": "testAAVE",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "asset",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "testAAVESimple",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {
+				"executeOperation(address,uint256,uint256,address,bytes)": {
+					"details": "Ensure that the contract can return the debt + premium, e.g., has      enough funds to repay and has approved the Pool to pull the total amount",
+					"params": {
+						"amount": "The amount of the flash-borrowed asset",
+						"asset": "The address of the flash-borrowed asset",
+						"initiator": "The address of the flashloan initiator",
+						"params": "The byte-encoded params passed when initiating the flashloan",
+						"premium": "The fee of the flash-borrowed asset"
+					},
+					"returns": {
+						"_0": "True if the execution of the operation succeeds, false otherwise"
+					}
+				}
+			},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {
+				"executeOperation(address,uint256,uint256,address,bytes)": {
+					"notice": "Executes an operation after receiving the flash-borrowed asset"
+				}
+			},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Code-hardhat-ethersJs/contracts/AAVETest.sol": "AAVETest"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"@aave/core-v3/contracts/dependencies/openzeppelin/contracts/SafeMath.sol": {
+			"keccak256": "0xebee8ebbaf030d9759019eb24e0392d4b27094d5a30a8d18b28f230562f6a4fa",
+			"license": "agpl-3.0",
+			"urls": [
+				"bzz-raw://bcff68da0d8d7f22828c3390fa121e2e1396027710321b6ec11b155c597d0af2",
+				"dweb:/ipfs/Qmd7ZvFXanV5dJ8caUdrWP1B6kgyt8tgvMb7upQrEZ6b2Q"
+			]
+		},
+		"@aave/core-v3/contracts/flashloan/interfaces/IFlashLoanSimpleReceiver.sol": {
+			"keccak256": "0x8bd048533af4616e2701267daa15af490ee9dd8cf1e7808829f8c0777b256ed9",
+			"license": "AGPL-3.0",
+			"urls": [
+				"bzz-raw://7010319440fab878354f8114868808eaeb157ff1256801e9180aa86953451284",
+				"dweb:/ipfs/QmaFpQATQBdFozaiffCQ84opt2g2MDaP6nWQ9Xxc1MBsEo"
+			]
+		},
+		"@aave/core-v3/contracts/interfaces/IPool.sol": {
+			"keccak256": "0x71a2d4598a4d7f7f34188e2114d7cc2208a372a2d9361c42c744f6d48e7a72cd",
+			"license": "AGPL-3.0",
+			"urls": [
+				"bzz-raw://ba0ebc00e0845521ef0f32190954bae554c1525cc3da6657c527f6a3f471a0bd",
+				"dweb:/ipfs/QmRR2KbdXaEY2ciDTEEUYUnxCQ95otFiRzcPHYDxNd7WUx"
+			]
+		},
+		"@aave/core-v3/contracts/interfaces/IPoolAddressesProvider.sol": {
+			"keccak256": "0x73185cd3b952eb691bbf2344b3f7a35cf8b67b33c39275e52e12b80436ea1d5c",
+			"license": "AGPL-3.0",
+			"urls": [
+				"bzz-raw://ed19048938ec0806b0a227a49bf58e04456974fae4d649ce1f189c394d73898e",
+				"dweb:/ipfs/QmSAVn8e6zX2aYWhDibLZxgZFDz3Y5CvTKYBXgutRtBYTP"
+			]
+		},
+		"@aave/core-v3/contracts/protocol/libraries/types/DataTypes.sol": {
+			"keccak256": "0xf3acc235689aae1094d33bfdf90e60b0c3ae1f12c5f095b8cffb69bc6880765c",
+			"license": "BUSL-1.1",
+			"urls": [
+				"bzz-raw://2937f3e23de07b40eec53b9afb88cdfaf20a86e308c0cfc722092c73983260c0",
+				"dweb:/ipfs/QmP9wdVoab7hDTg2aUW9LYBVcyy4iwEpj5FzmoozkpXSWn"
+			]
+		},
+		"@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+			"keccak256": "0xbbc8ac883ac3c0078ce5ad3e288fbb3ffcc8a30c3a98c0fda0114d64fc44fca2",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://87a7a5d2f6f63f84598af02b8c50ca2df2631cb8ba2453e8d95fcb17e4be9824",
+				"dweb:/ipfs/QmR76hqtAcRqoFj33tmNjcWTLrgNsAaakYwnKZ8zoJtKei"
+			]
+		},
+		"@uniswap/swap-router-contracts/contracts/interfaces/IV3SwapRouter.sol": {
+			"keccak256": "0xa2300af2b82af292216a8f3f301a86e65463655fff9fb791515e3fd2ccf4a14c",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://a0a9bece58527fb5c1773d86666c7a71884a78f413e230dfa8c8a7f8ea564ef9",
+				"dweb:/ipfs/QmbDhvpoZJN1KntxUUxkYV89RPTwqVBiyHBkvVh4QHSveo"
+			]
+		},
+		"@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router01.sol": {
+			"keccak256": "0x8a3c5c449d4b7cd76513ed6995f4b86e4a86f222c770f8442f5fc128ce29b4d2",
+			"urls": [
+				"bzz-raw://1df63ca373dafae3bd0ee7fe70f890a1dc7c45ed869c01de68413e0e97ff9deb",
+				"dweb:/ipfs/QmefJgEYGUL8KX7kQKYTrDweF8GB7yjy3nw5Bmqzryg7PG"
+			]
+		},
+		"@uniswap/v2-periphery/contracts/interfaces/IUniswapV2Router02.sol": {
+			"keccak256": "0x744e30c133bd0f7ca9e7163433cf6d72f45c6bb1508c2c9c02f1a6db796ae59d",
+			"urls": [
+				"bzz-raw://9bf2f4454ad63d4cff03a0630e787d9e8a9deed80aec89682cd8ad6379d9ef8c",
+				"dweb:/ipfs/Qme51hQNR2wpax7ooUadhtqLtXm8ffeVVYyubLkTT4wMCG"
+			]
+		},
+		"@uniswap/v3-core/contracts/interfaces/callback/IUniswapV3SwapCallback.sol": {
+			"keccak256": "0x3f485fb1a44e8fbeadefb5da07d66edab3cfe809f0ac4074b1e54e3eb3c4cf69",
+			"license": "GPL-2.0-or-later",
+			"urls": [
+				"bzz-raw://095ce0626b41318c772b3ebf19d548282607f6a8f3d6c41c13edfbd5370c8652",
+				"dweb:/ipfs/QmVDZfJJ89UUCE1hMyzqpkZAtQ8jUsBgZNE5AMRG7RzRFS"
+			]
+		},
+		"Code-hardhat-ethersJs/contracts/AAVETest.sol": {
+			"keccak256": "0xeb12607e5dc3bb0b05fe9a796db41b97cc94c61b78d02f04df287061a6305fae",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://9f125dff8c27f892d04a529f6366f076928564003215128f9c0729f5603f5d74",
+				"dweb:/ipfs/QmYAqLT31gxxeVDPUhiR982Reo5DnU7Ak67WuCuPdaXHo5"
+			]
+		}
+	},
+	"version": 1
+}
