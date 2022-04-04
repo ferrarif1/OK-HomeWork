@@ -1,0 +1,68 @@
+{
+	"compiler": {
+		"version": "0.8.13+commit.abaa5c0e"
+	},
+	"language": "Solidity",
+	"output": {
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "payable",
+				"type": "constructor"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "registerAddress",
+						"type": "address"
+					}
+				],
+				"name": "selfdestructfor",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"stateMutability": "payable",
+				"type": "receive"
+			}
+		],
+		"devdoc": {
+			"kind": "dev",
+			"methods": {},
+			"version": 1
+		},
+		"userdoc": {
+			"kind": "user",
+			"methods": {},
+			"version": 1
+		}
+	},
+	"settings": {
+		"compilationTarget": {
+			"Code-hardhat-ethersJs/contracts/sc.sol": "SelfDestructTest"
+		},
+		"evmVersion": "london",
+		"libraries": {},
+		"metadata": {
+			"bytecodeHash": "ipfs"
+		},
+		"optimizer": {
+			"enabled": false,
+			"runs": 200
+		},
+		"remappings": []
+	},
+	"sources": {
+		"Code-hardhat-ethersJs/contracts/sc.sol": {
+			"keccak256": "0x62a8b6b6ff9faa6cec0d2a936ce21861695bac6e98b752c68d8ba50d129d8ed5",
+			"license": "MIT",
+			"urls": [
+				"bzz-raw://77f7816ee9f1283e042bc14f8a5a9dd9dbcde75b9041ea5a5308d1f5ae504eed",
+				"dweb:/ipfs/QmS5eGc7sR3EF3T84YNgfqpTqXxgibbTHbHsVRSLtsJEz3"
+			]
+		}
+	},
+	"version": 1
+}
